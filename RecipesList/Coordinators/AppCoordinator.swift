@@ -9,36 +9,35 @@
 import UIKit
 
 class AppCoordinator: RootViewCoordinator {
-    
+
     var childCoordinators: [Coordinator] = []
-    
+
     var rootViewController: UIViewController {
         return self.navigationController
     }
-    
+
     private let window: UIWindow
-    
+
     private lazy var navigationController: UINavigationController = UINavigationController()
-    
+
     init(window: UIWindow) {
         self.window = window
-        
+
         self.window.rootViewController = self.rootViewController
         self.window.makeKeyAndVisible()
     }
-    
+
     func start() {
         self.showContactsListViewController()
     }
-    
+
     private func showContactsListViewController() {
-        //let viewModel = ContactsListViewModel()
-        //let contactsListViewController = ContactsListViewController(viewModel: viewModel)
-        let recipesListViewController = RecipesListViewController()
+        let viewModel = RecipesListViewModel()
+        let recipesListViewController = RecipesListViewController(viewModel: viewModel)
         recipesListViewController.delegate = self
         self.navigationController.viewControllers = [recipesListViewController]
     }
-    
+
 }
 
 extension AppCoordinator: RecipesListViewControllerDelegate {

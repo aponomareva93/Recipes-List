@@ -14,4 +14,15 @@ protocol RecipeDetailsViewControllerDelegate: class {
 
 class RecipeDetailsViewController: UIViewController {
     weak var delegate: RecipeDetailsViewControllerDelegate?
+    
+    private var viewModel: RecipeDetailsViewModel
+    
+    init(viewModel: RecipeDetailsViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }

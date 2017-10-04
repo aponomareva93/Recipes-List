@@ -14,21 +14,21 @@ protocol RecipeDetailsCoordinatorDelegate: class {
 
 class RecipeDetailsCoordinator: RootViewCoordinator {
     var childCoordinators: [Coordinator] = []
-    
+
     var rootViewController: UIViewController {
         return self.navigationController
     }
-    
+
     weak var delegate: RecipeDetailsCoordinatorDelegate?
-    
+
     private lazy var navigationController: UINavigationController = {
         let navigationController = UINavigationController()
         return navigationController
     }()
-    
-    func start() {
-        //let viewModel = ContactDetailsViewModel(contact: contact)
-        let recipeDetailsViewController = RecipeDetailsViewController()
+
+    func start(with recipe: Recipe? = nil) {
+        let viewModel = RecipeDetailsViewModel(recipe: recipe)
+        let recipeDetailsViewController = RecipeDetailsViewController(viewModel: viewModel)
         recipeDetailsViewController.delegate = self
         self.navigationController.viewControllers = [recipeDetailsViewController]
     }
