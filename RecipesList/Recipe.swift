@@ -17,7 +17,7 @@ fileprivate extension Constants {
 
 struct Recipe: JSONMappable {
     var name: String?
-    var imagesURLs: [String]?
+    var imagesURLs: [URL?]?
     var lastUpdated: Int?
     var instructions: String?
     var description: String?
@@ -32,7 +32,7 @@ struct Recipe: JSONMappable {
         
         if let imagesURLsNames = JSON?["images"] as? [String] {
             for imageURLName in imagesURLsNames {
-                self.imagesURLs?.append(imageURLName)
+                self.imagesURLs?.append(URL(string: imageURLName))
             }
         } else {
             print("Recipe::init:Cannot parse \"images\"-section")

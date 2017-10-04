@@ -10,9 +10,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RecipesListCell" customModule="RecipesList" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="105" id="KGk-i7-Jjw">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="105" id="KGk-i7-Jjw" customClass="RecipesListCell" customModule="RecipesList" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="393" height="105"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
@@ -57,6 +57,11 @@
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="recipeDescriptionLabel" destination="VwX-aT-Lhh" id="AwI-3C-Hwy"/>
+                <outlet property="recipeNameLabel" destination="PgK-VY-IPI" id="OEc-TR-gSX"/>
+                <outlet property="recipePhotoImageView" destination="LaQ-IK-Hxr" id="1V7-uJ-ArB"/>
+            </connections>
             <point key="canvasLocation" x="61.5" y="21.5"/>
         </tableViewCell>
     </objects>

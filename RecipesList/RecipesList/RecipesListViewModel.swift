@@ -11,6 +11,22 @@ import Foundation
 class RecipesListViewModel {
     private var recipes: [Recipe]?
     
+    var recipesCount: Int {
+        if let count = recipes?.count {
+            return count
+        }
+        return 0
+    }
+    
+    func recipe(row: Int) -> Recipe? {
+        if let recipes = recipes {
+            if recipes.indices.contains(row) {
+                return recipes[row]
+            }
+        }
+        return nil
+    }
+    
     func getRecipes(completionHandler: @escaping () -> Void) {
         NetworkManager.fetchRecipes(completionHandler: {[weak self] (responseObject: Response<Recipe>) in
             switch responseObject {
@@ -23,12 +39,5 @@ class RecipesListViewModel {
                 print(error)
             }
         })
-    }
-    
-    var recipesCount: Int {
-        if let count = recipes?.count {
-            return count
-        }
-        return 0
     }
 }

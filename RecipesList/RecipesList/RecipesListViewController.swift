@@ -55,6 +55,7 @@ extension RecipesListViewController: UITableViewDataSource, UITableViewDelegate 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier:
             Constants.recipeCellIdentifier, for: indexPath) as? RecipesListCell {
+            cell.setup(viewModel: RecipesListCellViewModel(with: viewModel.recipe(row: indexPath.row)))
             return cell
         }
         return UITableViewCell()

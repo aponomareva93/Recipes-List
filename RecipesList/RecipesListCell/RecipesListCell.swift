@@ -9,15 +9,16 @@
 import UIKit
 
 class RecipesListCell: UITableViewCell {
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
     
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        // Configure the view for the selected state
-    }
+    @IBOutlet private weak var recipePhotoImageView: UIImageView!
+    @IBOutlet private weak var recipeNameLabel: UILabel!
+    @IBOutlet private weak var recipeDescriptionLabel: UILabel!
     
+    func setup(viewModel: RecipesListCellViewModel) {
+        recipeNameLabel?.text = viewModel.name
+        recipeDescriptionLabel?.text = viewModel.description
+        viewModel.getImageFromURL(updateUIHandler: { [weak self] data in
+            self?.recipePhotoImageView.image = UIImage(data: data)
+        })
+    }
 }
