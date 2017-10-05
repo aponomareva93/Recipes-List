@@ -41,6 +41,7 @@ class RecipeDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         nameLabel?.numberOfLines = 0
         nameLabel?.lineBreakMode = .byWordWrapping
         nameLabel?.textColor = Constants.recipeNameColor
@@ -50,7 +51,7 @@ class RecipeDetailsViewController: UIViewController {
         descriptionLabel?.lineBreakMode = .byWordWrapping
         if let description = viewModel.description,
             !description.isEmpty {
-            descriptionLabel?.text = description
+            descriptionLabel?.text = "Description: " + description
         } else {
             descriptionLabel?.isHidden = true
         }
@@ -58,14 +59,20 @@ class RecipeDetailsViewController: UIViewController {
         instructionsTextView?.isEditable = false
         instructionsTextView?.text = viewModel.instructions
         
-        photosPageControl?.numberOfPages = viewModel.imagesCount
-        photosPageControl?.addTarget(self, action: #selector(pageControlTapHandler(sender:)), for: .touchUpInside)
-        
         viewModel.getImageFromURL(imageNumber: photosPageControl.currentPage, updateUIHandler: { [weak self] data in
             self?.photoImageView?.image = UIImage(data: data)
         })
         
         if viewModel.imagesCount > 1 {
+            photosPageControl?.numberOfPages = viewModel.imagesCount
+            let pageControlWidth = photosPageControl.size(forNumberOfPages: viewModel.imagesCount).width
+            let mainViewWidth = view.frame.width
+            if pageControlWidth > mainViewWidth {
+                let scale = mainViewWidth / pageControlWidth
+                photosPageControl?.transform = CGAffineTransform(scaleX: scale, y: scale)
+            }
+            photosPageControl?.addTarget(self, action: #selector(pageControlTapHandler(sender:)), for: .touchUpInside)
+            
             photoImageView?.isUserInteractionEnabled = true
             let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(swipePhotos(swipeGesture:)))
             leftSwipe.direction = .left
