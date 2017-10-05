@@ -21,6 +21,7 @@ class RecipesListViewController: UIViewController {
     private var viewModel: RecipesListViewModel
 
     @IBOutlet private weak var recipesListTableView: UITableView!
+    @IBOutlet private weak var searchRecipesBar: UISearchBar!
     
     init(viewModel: RecipesListViewModel) {
         self.viewModel = viewModel
@@ -29,6 +30,7 @@ class RecipesListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchRecipesBar?.delegate = self
         recipesListTableView?.delegate = self
         recipesListTableView?.dataSource = self
         recipesListTableView?.register(UINib.init(nibName: "RecipesListCell", bundle: nil),
@@ -68,5 +70,12 @@ extension RecipesListViewController: UITableViewDataSource, UITableViewDelegate 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         delegate?.recipesListViewControllerDidTapRecipe(recipesListViewController: self,
                                                         recipe: viewModel.recipe(row: indexPath.row))
+    }
+}
+
+extension RecipesListViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        viewModel.search(searchText: searchText)
+        self.recipesListTableView.reloadData()
     }
 }

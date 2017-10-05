@@ -12,6 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RecipesListViewController" customModule="RecipesList" customModuleProvider="target">
             <connections>
                 <outlet property="recipesListTableView" destination="Adh-v6-ulM" id="G1a-Xn-zuT"/>
+                <outlet property="searchRecipesBar" destination="krH-Ds-OSa" id="nv9-MT-o1U"/>
                 <outlet property="view" destination="CPn-P0-bRR" id="39X-AP-VTZ"/>
             </connections>
         </placeholder>
