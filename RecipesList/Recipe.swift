@@ -31,8 +31,10 @@ struct Recipe: JSONMappable {
         }
         
         if let imagesURLsNames = JSON?["images"] as? [String] {
+            self.imagesURLs = [URL?]()
             for imageURLName in imagesURLsNames {
-                self.imagesURLs?.append(URL(string: imageURLName))
+                let url = URL(string: imageURLName)
+                self.imagesURLs?.append(url)
             }
         } else {
             print("Recipe::init:Cannot parse \"images\"-section")

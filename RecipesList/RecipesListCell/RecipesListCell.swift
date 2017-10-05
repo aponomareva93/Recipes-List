@@ -16,6 +16,10 @@ class RecipesListCell: UITableViewCell {
     
     func setup(viewModel: RecipesListCellViewModel) {
         recipeNameLabel?.text = viewModel.name
+        recipeNameLabel?.numberOfLines = 0
+        recipeNameLabel?.lineBreakMode = .byWordWrapping
+        recipeNameLabel?.textColor = Constants.recipeNameColor
+        
         recipeDescriptionLabel?.text = viewModel.description
         viewModel.getImageFromURL(updateUIHandler: { [weak self] data in
             self?.recipePhotoImageView.image = UIImage(data: data)

@@ -6,8 +6,8 @@
 //  Copyright © 2017 anna. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 struct Constants {
-    
+    static let recipeNameColor = UIColor.brown
 }

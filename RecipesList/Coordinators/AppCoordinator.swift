@@ -41,10 +41,10 @@ class AppCoordinator: RootViewCoordinator {
 }
 
 extension AppCoordinator: RecipesListViewControllerDelegate {
-    func recipesListViewControllerDidTapRecipe(recipesListViewController: RecipesListViewController) {
+    func recipesListViewControllerDidTapRecipe(recipesListViewController: RecipesListViewController, recipe: Recipe?) {
         let recipeDeatilsCoordinator = RecipeDetailsCoordinator()
         recipeDeatilsCoordinator.delegate = self
-        recipeDeatilsCoordinator.start()
+        recipeDeatilsCoordinator.start(with: recipe)
         self.addChildCoordinator(recipeDeatilsCoordinator)
         self.rootViewController.present(recipeDeatilsCoordinator.rootViewController, animated: true, completion: nil)
     }

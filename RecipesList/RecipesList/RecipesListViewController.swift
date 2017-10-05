@@ -13,7 +13,7 @@ fileprivate extension Constants {
 }
 
 protocol RecipesListViewControllerDelegate: class {
-    func recipesListViewControllerDidTapRecipe(recipesListViewController: RecipesListViewController)
+    func recipesListViewControllerDidTapRecipe(recipesListViewController: RecipesListViewController, recipe: Recipe?)
 }
 
 class RecipesListViewController: UIViewController {
@@ -63,5 +63,10 @@ extension RecipesListViewController: UITableViewDataSource, UITableViewDelegate 
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 105.0
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        delegate?.recipesListViewControllerDidTapRecipe(recipesListViewController: self,
+                                                        recipe: viewModel.recipe(row: indexPath.row))
     }
 }
