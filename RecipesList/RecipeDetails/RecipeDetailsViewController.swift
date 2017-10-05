@@ -50,18 +50,20 @@ class RecipeDetailsViewController: UIViewController {
         descriptionLabel?.text = viewModel.description
         
         instructionsTextView?.isEditable = false
-        if let instructions = viewModel.instructions {
-            instructionsTextView?.text = instructions.replacingOccurrences(of: "<br>",
-                                                                           with: "\n",
-                                                                           options: .regularExpression,
-                                                                           range: nil)
-        }
+        instructionsTextView?.text = viewModel.instructions
         
-        /*let scrollView = UIScrollView(frame: view.bounds)
-        view.addSubview(scrollView)
-        scrollView.addSubview(nameLabel)
-        scrollView.addSubview(descriptionLabel)*/
+        photosPageControl.numberOfPages = viewModel.imagesCount
+        photosPageControl.addTarget(self, action: #selector(pageControlTapHandler(sender:)), for: .touchUpInside)
         
+        viewModel.getImageFromURL(imageNumber: photosPageControl.currentPage, updateUIHandler: { [weak self] data in
+            self?.photoImageView.image = UIImage(data: data)
+        })
+    }
+    
+    @objc func pageControlTapHandler(sender: UIPageControl) {
+        viewModel.getImageFromURL(imageNumber: photosPageControl.currentPage, updateUIHandler: { [weak self] data in
+            self?.photoImageView.image = UIImage(data: data)
+        })
     }
     
     required init?(coder aDecoder: NSCoder) {

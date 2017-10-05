@@ -30,7 +30,8 @@
                     <subviews>
                         <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="EtR-Ei-A2g">
                             <rect key="frame" x="168" y="315" width="39" height="37"/>
-                            <color key="pageIndicatorTintColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="pageIndicatorTintColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="currentPageIndicatorTintColor" red="0.40000000600000002" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         </pageControl>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4CN-yJ-5ta">
                             <rect key="frame" x="16" y="0.0" width="343" height="58"/>
@@ -58,21 +59,21 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ifp-sb-S1o">
-                            <rect key="frame" x="67" y="85" width="240" height="212"/>
+                            <rect key="frame" x="84" y="80" width="206" height="222"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="212" id="k4b-xa-wWf"/>
+                                <constraint firstAttribute="width" constant="206" id="7Nu-jl-0nJ"/>
+                                <constraint firstAttribute="height" constant="222" id="k4b-xa-wWf"/>
                             </constraints>
                         </imageView>
                     </subviews>
                     <constraints>
                         <constraint firstItem="4CN-yJ-5ta" firstAttribute="leading" secondItem="ypk-JR-PrN" secondAttribute="leading" constant="16" id="3NN-F5-yun"/>
-                        <constraint firstItem="ifp-sb-S1o" firstAttribute="top" secondItem="4CN-yJ-5ta" secondAttribute="bottom" constant="27" id="8k2-SL-vXE"/>
-                        <constraint firstItem="EtR-Ei-A2g" firstAttribute="top" secondItem="ifp-sb-S1o" secondAttribute="bottom" constant="18" id="Dzm-Xr-jLa"/>
+                        <constraint firstItem="ifp-sb-S1o" firstAttribute="top" secondItem="4CN-yJ-5ta" secondAttribute="bottom" constant="22" id="8k2-SL-vXE"/>
+                        <constraint firstItem="EtR-Ei-A2g" firstAttribute="top" secondItem="ifp-sb-S1o" secondAttribute="bottom" constant="13" id="Dzm-Xr-jLa"/>
                         <constraint firstItem="w4H-85-axE" firstAttribute="leading" secondItem="4CN-yJ-5ta" secondAttribute="leading" id="KGa-WH-2Jq"/>
                         <constraint firstItem="w4H-85-axE" firstAttribute="trailing" secondItem="BEK-V8-jHp" secondAttribute="trailing" id="KTZ-6h-LfE"/>
                         <constraint firstItem="4CN-yJ-5ta" firstAttribute="centerX" secondItem="EtR-Ei-A2g" secondAttribute="centerX" id="NuH-GF-ORs"/>
                         <constraint firstItem="4CN-yJ-5ta" firstAttribute="top" secondItem="ypk-JR-PrN" secondAttribute="topMargin" constant="-28" id="OEX-Do-YeI"/>
-                        <constraint firstItem="ifp-sb-S1o" firstAttribute="leading" secondItem="ypk-JR-PrN" secondAttribute="leading" constant="67" id="Qpe-P9-lDa"/>
                         <constraint firstAttribute="trailing" secondItem="4CN-yJ-5ta" secondAttribute="trailing" constant="16" id="VLL-ge-htc"/>
                         <constraint firstAttribute="bottom" secondItem="BEK-V8-jHp" secondAttribute="bottom" constant="28" id="Xbh-Ge-BHQ"/>
                         <constraint firstAttribute="bottom" secondItem="4CN-yJ-5ta" secondAttribute="bottom" constant="609" id="f3U-5l-6Us"/>

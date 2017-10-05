@@ -20,10 +20,40 @@ class RecipeDetailsViewModel {
     }
     
     var instructions: String? {
-        return recipe?.instructions
+        return recipe?.instructions?.replaceBrByNewLine()
+    }
+    
+    var imagesCount: Int {
+        return recipe?.imagesURLs?.count ?? 0
     }
     
     init(recipe: Recipe? = nil) {
         self.recipe = recipe
+    }
+    
+    func getImageFromURL(imageNumber: Int, updateUIHandler: @escaping (_ imageData: Data) -> Void) {
+        if let imagesURLs = recipe?.imagesURLs,
+            imagesURLs.indices.contains(imageNumber) {
+            DispatchQueue.global(qos: .userInitiated).async {
+                if let url = imagesURLs[imageNumber] {
+                    let urlContents = try? Data(contentsOf: url)
+                    
+                    if let imageData = urlContents, url == url {
+                        DispatchQueue.main.async {
+                            updateUIHandler(imageData)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+fileprivate extension String {
+    func replaceBrByNewLine() -> String {
+        return self.replacingOccurrences(of: "<br>",
+                                         with: "\n",
+                                         options: .regularExpression,
+                                         range: nil)
     }
 }
