@@ -45,6 +45,8 @@ class RecipesListViewController: UIViewController {
                                        forCellReuseIdentifier: Constants.recipeCellIdentifier)
         self.viewModel.getRecipes(updateUIHandler: { [weak self] in
             self?.recipesListTableView.reloadData()
+        }, errorHandler: { [weak self] error in
+            self?.showAlert(withTitle: "Error", message: error.localizedDescription)
         })
     }
     
@@ -86,6 +88,10 @@ extension RecipesListViewController: UISearchBarDelegate {
         viewModel.search(searchText: searchText)
         self.recipesListTableView.reloadData()
     }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
 }
 
 extension RecipesListViewController: UIPickerViewDelegate, UIPickerViewDataSource {
@@ -101,10 +107,22 @@ extension RecipesListViewController: UIPickerViewDelegate, UIPickerViewDataSourc
         let sortType = Constants.sortTypesArray[row]
         sortTypeTextField?.text = sortType.rawValue
         viewModel.sortType = sortType
+        sortTypeTextField?.resignFirstResponder()
         recipesListTableView.reloadData()
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
+    }
+}
+
+fileprivate extension UIViewController {
+    func showAlert(withTitle title: String, message: String, okButtonTapped: (() -> Void)? = nil) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default) { _ in
+            okButtonTapped?()
+        }
+        alert.addAction(okAction)
+        present(alert, animated: true, completion: nil)
     }
 }

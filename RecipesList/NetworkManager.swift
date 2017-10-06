@@ -50,7 +50,6 @@ class NetworkManager {
                         }
                         completion(.success(JSONElementsArray))
                     } else {
-                        print("NetworkManager::Cannot create JSON from response")
                         let error = NSError(domain: Constants.invalidJSONResponseError.domain,
                                             code: Constants.invalidJSONResponseError.code,
                                             userInfo: Constants.invalidJSONResponseError.userInfo)

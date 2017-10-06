@@ -53,7 +53,7 @@ class RecipesListViewModel {
         }
     }
     
-    func getRecipes(updateUIHandler: @escaping () -> Void) {
+    func getRecipes(updateUIHandler: @escaping () -> Void, errorHandler: ((_ error: NSError) -> Void)? = nil) {
         NetworkManager.fetchRecipes(completion: {[weak self] (responseObject: Response<Recipe>) in
             switch responseObject {
             case .success(let recipes):
@@ -62,7 +62,13 @@ class RecipesListViewModel {
                     updateUIHandler()
                 }
             case .failure(let error):
-                print(error)
+                if errorHandler != nil {
+                    DispatchQueue.main.async {
+                        errorHandler?(error)
+                    }
+                } else {
+                    print(error)
+                }
             }
         })
     }
