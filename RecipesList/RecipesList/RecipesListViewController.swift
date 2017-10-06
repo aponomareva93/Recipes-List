@@ -55,6 +55,10 @@ class RecipesListViewController: UIViewController {
         recipesListTableView?.register(UINib.init(nibName: Constants.recipeCellNibName, bundle: nil),
                                        forCellReuseIdentifier: Constants.recipeCellIdentifier)
         self.viewModel.getRecipes(updateUIHandler: { [weak self] in
+            sortTypePicker.selectRow(0, inComponent: 0, animated: false)
+            self?.viewModel.sortType = Constants.sortTypesArray[0]
+            self?.sortTypeTextField.text = Constants.sortTypesArray[0].rawValue
+            
             self?.recipesListTableView.reloadData()
         }, errorHandler: { [weak self] error in
             self?.showAlert(withTitle: "Error", message: error.localizedDescription)
@@ -86,6 +90,7 @@ extension RecipesListViewController: UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("!!!")
         delegate?.recipesListViewControllerDidTapRecipe(recipesListViewController: self,
                                                         recipe: viewModel.recipe(row: indexPath.row))
     }

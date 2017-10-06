@@ -12,12 +12,12 @@ struct Constants {
     static let recipeNameColor = UIColor.brown
     
     enum SortTypes: String {
-        case alphabeticallySort = "Alphabetically"
         case dateSort = "By Date"
+        case alphabeticallySort = "Alphabetically"
     }
     static let sortTypesArray = [
-        SortTypes.alphabeticallySort,
-        SortTypes.dateSort
+        SortTypes.dateSort,
+        SortTypes.alphabeticallySort
     ]
     
     static let recipeDetailsCellHeight: CGFloat = 105.0
