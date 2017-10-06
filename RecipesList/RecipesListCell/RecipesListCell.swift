@@ -10,10 +10,13 @@ import UIKit
 
 class RecipesListCell: UITableViewCell {
     
+    // MARK: Outlets
     @IBOutlet private weak var recipePhotoImageView: UIImageView!
     @IBOutlet private weak var recipeNameLabel: UILabel!
     @IBOutlet private weak var recipeDescriptionLabel: UILabel!
+    @IBOutlet private weak var spinner: UIActivityIndicatorView!
     
+    // MARK: UI setup
     func setup(viewModel: RecipesListCellViewModel) {
         frame.size.height = Constants.recipeDetailsCellHeight
         
@@ -23,8 +26,11 @@ class RecipesListCell: UITableViewCell {
         recipeNameLabel?.textColor = Constants.recipeNameColor
         
         recipeDescriptionLabel?.text = viewModel.description
+        
+        spinner.startAnimating()
         viewModel.getImageFromURL(updateUIHandler: { [weak self] data in
             self?.recipePhotoImageView.image = UIImage(data: data)
+            self?.spinner.stopAnimating()
         })
     }
 }

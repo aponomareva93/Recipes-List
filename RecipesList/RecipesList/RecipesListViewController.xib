@@ -26,18 +26,23 @@
                     <rect key="frame" x="0.0" y="106" width="375" height="561"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sort:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rTf-ih-n8P">
-                    <rect key="frame" x="0.0" y="20" width="37.5" height="30"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Choose Sort Type" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HOh-la-qnH">
-                    <rect key="frame" x="37" y="20" width="338" height="30"/>
-                    <nil key="textColor"/>
-                    <fontDescription key="fontDescription" type="italicSystem" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
-                </textField>
+                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YWM-wX-YNn">
+                    <rect key="frame" x="0.0" y="20" width="375" height="30"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sort: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rTf-ih-n8P">
+                            <rect key="frame" x="0.0" y="0.0" width="42" height="30"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Choose Sort Type" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HOh-la-qnH">
+                            <rect key="frame" x="42" y="0.0" width="333" height="30"/>
+                            <nil key="textColor"/>
+                            <fontDescription key="fontDescription" type="italicSystem" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                    </subviews>
+                </stackView>
                 <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="krH-Ds-OSa">
                     <rect key="frame" x="0.0" y="50" width="375" height="56"/>
                     <constraints>
@@ -49,17 +54,14 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="krH-Ds-OSa" firstAttribute="top" secondItem="Sis-7C-sGK" secondAttribute="top" constant="30" id="4Ww-2L-wJx"/>
-                <constraint firstItem="HOh-la-qnH" firstAttribute="top" secondItem="Sis-7C-sGK" secondAttribute="top" id="6Cx-KF-OlU"/>
-                <constraint firstItem="rTf-ih-n8P" firstAttribute="top" secondItem="Sis-7C-sGK" secondAttribute="top" id="8f4-Cs-uvo"/>
+                <constraint firstItem="krH-Ds-OSa" firstAttribute="top" secondItem="YWM-wX-YNn" secondAttribute="bottom" id="9eI-4D-Vwq"/>
                 <constraint firstItem="krH-Ds-OSa" firstAttribute="trailing" secondItem="Sis-7C-sGK" secondAttribute="trailing" id="Geu-E4-NPu"/>
                 <constraint firstItem="krH-Ds-OSa" firstAttribute="leading" secondItem="Sis-7C-sGK" secondAttribute="leading" id="IgV-cj-dGU"/>
-                <constraint firstItem="rTf-ih-n8P" firstAttribute="leading" secondItem="Sis-7C-sGK" secondAttribute="leading" id="RVc-zj-l5m"/>
-                <constraint firstItem="HOh-la-qnH" firstAttribute="leading" secondItem="Sis-7C-sGK" secondAttribute="leading" constant="37" id="Z6f-Nw-OM2"/>
-                <constraint firstItem="krH-Ds-OSa" firstAttribute="top" secondItem="HOh-la-qnH" secondAttribute="bottom" id="fII-0D-7hl"/>
+                <constraint firstItem="YWM-wX-YNn" firstAttribute="top" secondItem="Sis-7C-sGK" secondAttribute="top" id="Kc5-Od-BJs"/>
+                <constraint firstItem="YWM-wX-YNn" firstAttribute="leading" secondItem="Sis-7C-sGK" secondAttribute="leading" id="enR-8E-vav"/>
                 <constraint firstItem="Adh-v6-ulM" firstAttribute="top" secondItem="krH-Ds-OSa" secondAttribute="bottom" id="gUg-Sx-4QE"/>
-                <constraint firstItem="krH-Ds-OSa" firstAttribute="top" secondItem="rTf-ih-n8P" secondAttribute="bottom" id="mAA-L3-dhb"/>
+                <constraint firstItem="Sis-7C-sGK" firstAttribute="trailing" secondItem="YWM-wX-YNn" secondAttribute="trailing" id="pvv-ag-v2m"/>
                 <constraint firstItem="Adh-v6-ulM" firstAttribute="leading" secondItem="Sis-7C-sGK" secondAttribute="leading" id="rAe-Rc-a2V"/>
-                <constraint firstItem="HOh-la-qnH" firstAttribute="trailing" secondItem="Sis-7C-sGK" secondAttribute="trailing" id="u2W-ud-V6t"/>
                 <constraint firstItem="Adh-v6-ulM" firstAttribute="bottom" secondItem="Sis-7C-sGK" secondAttribute="bottom" id="xhY-4N-uhq"/>
                 <constraint firstItem="Adh-v6-ulM" firstAttribute="trailing" secondItem="Sis-7C-sGK" secondAttribute="trailing" id="yEc-Dx-tL5"/>
             </constraints>

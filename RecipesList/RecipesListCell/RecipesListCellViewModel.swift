@@ -9,12 +9,18 @@
 import UIKit
 
 class RecipesListCellViewModel {
+    private var recipe: Recipe?
+    
     var name: String? {
         return recipe?.name
     }
     
     var description: String? {
         return recipe?.description
+    }
+    
+    init(with recipe: Recipe?) {
+        self.recipe = recipe
     }
     
     func getImageFromURL(updateUIHandler: @escaping (_ imageData: Data) -> Void) {
@@ -32,11 +38,5 @@ class RecipesListCellViewModel {
                 }
             }
         }
-    }
-    
-    private var recipe: Recipe?
-    
-    init(with recipe: Recipe?) {
-        self.recipe = recipe
     }
 }

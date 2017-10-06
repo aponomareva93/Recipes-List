@@ -31,10 +31,7 @@ class RecipeDetailsViewModel {
     }
     
     var difficulty: Int {
-        if let difficultyLevel = recipe?.difficulty {
-            return difficultyLevel
-        }
-        return 0
+        return recipe?.difficulty ?? 0
     }
     
     init(recipe: Recipe? = nil) {
@@ -46,8 +43,7 @@ class RecipeDetailsViewModel {
             imagesURLs.indices.contains(imageNumber) {
             DispatchQueue.global(qos: .userInitiated).async {
                 if let url = imagesURLs[imageNumber] {
-                    let urlContents = try? Data(contentsOf: url)
-                    
+                    let urlContents = try? Data(contentsOf: url)                    
                     if let imageData = urlContents, url == url {
                         DispatchQueue.main.async {
                             updateUIHandler(imageData)

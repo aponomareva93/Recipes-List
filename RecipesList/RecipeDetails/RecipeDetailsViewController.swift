@@ -18,17 +18,19 @@ protocol RecipeDetailsViewControllerDelegate: class {
 }
 
 class RecipeDetailsViewController: UIViewController {
+    weak var delegate: RecipeDetailsViewControllerDelegate?
+    
+    private var viewModel: RecipeDetailsViewModel
+    
+    // MARK: Outlets
     @IBOutlet private weak var nameLabel: UILabel!
     @IBOutlet private weak var photoImageView: UIImageView!
     @IBOutlet private weak var photosPageControl: UIPageControl!
     @IBOutlet private weak var descriptionLabel: UILabel!
     @IBOutlet private weak var instructionsTextView: UITextView!
-    @IBOutlet private weak var difficultyLevelLabel: UILabel!
     @IBOutlet private weak var difficultyLevelStackView: UIStackView!
-    
-    weak var delegate: RecipeDetailsViewControllerDelegate?
-    private var viewModel: RecipeDetailsViewModel
-    
+    @IBOutlet private weak var spinner: UIActivityIndicatorView!
+        
     private lazy var cancelBarButtonItem: UIBarButtonItem = {
         let cancelBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel,
                                                   target: self,
@@ -36,10 +38,7 @@ class RecipeDetailsViewController: UIViewController {
         return cancelBarButtonItem
     }()
     
-    @objc private func cancelButtonTapped(sender: UIBarButtonItem) {
-        delegate?.recipeDetailsViewControllerDidTapClose(self)
-    }
-    
+    // MARK: Initializers
     init(viewModel: RecipeDetailsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -50,6 +49,7 @@ class RecipeDetailsViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: UI setup
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -68,11 +68,14 @@ class RecipeDetailsViewController: UIViewController {
         
         instructionsTextView?.isEditable = false
         instructionsTextView?.text = viewModel.instructions
+        instructionsTextView?.contentOffset = CGPoint.zero
         
-        viewModel.getImageFromURL(imageNumber: photosPageControl.currentPage, updateUIHandler: { [weak self] data in
-            self?.photoImageView?.image = UIImage(data: data)
-        })
-        
+        setImageView()
+        setupPagesControl()
+        setupDifficultyLevelControl()
+    }
+    
+    private func setupPagesControl() {
         if viewModel.imagesCount > 1 {
             photosPageControl?.numberOfPages = viewModel.imagesCount
             let pageControlWidth = photosPageControl.size(forNumberOfPages: viewModel.imagesCount).width
@@ -94,7 +97,9 @@ class RecipeDetailsViewController: UIViewController {
         } else {
             photosPageControl.isHidden = true
         }
-        
+    }
+    
+    func setupDifficultyLevelControl() {
         if viewModel.difficulty > 0 {
             for item in 0..<Constants.maxDifficultyLevel {
                 let label = UILabel()
@@ -109,9 +114,22 @@ class RecipeDetailsViewController: UIViewController {
         }
     }
     
-    @objc private func pageControlTapHandler(sender: UIPageControl) {
+    func setImageView() {
         viewModel.getImageFromURL(imageNumber: photosPageControl.currentPage, updateUIHandler: { [weak self] data in
             self?.photoImageView?.image = UIImage(data: data)
+        })
+    }
+    
+    // MARK: Actions
+    @objc private func cancelButtonTapped(sender: UIBarButtonItem) {
+        delegate?.recipeDetailsViewControllerDidTapClose(self)
+    }
+    
+    @objc private func pageControlTapHandler(sender: UIPageControl) {
+        spinner.startAnimating()
+        viewModel.getImageFromURL(imageNumber: photosPageControl.currentPage, updateUIHandler: { [weak self] data in
+            self?.photoImageView?.image = UIImage(data: data)
+            self?.spinner.stopAnimating()
         })
     }
     
@@ -120,16 +138,12 @@ class RecipeDetailsViewController: UIViewController {
         case .right:
             if photosPageControl.currentPage > 0 {
                 photosPageControl.currentPage -= 1
-                viewModel.getImageFromURL(imageNumber: photosPageControl.currentPage, updateUIHandler: { [weak self] data in
-                    self?.photoImageView?.image = UIImage(data: data)
-                })
+                setImageView()
             }
         case .left:
             if photosPageControl.currentPage < viewModel.imagesCount - 1 {
                 photosPageControl.currentPage += 1
-                viewModel.getImageFromURL(imageNumber: photosPageControl.currentPage, updateUIHandler: { [weak self] data in
-                    self?.photoImageView?.image = UIImage(data: data)
-                })
+                setImageView()
             }
         default:
             break

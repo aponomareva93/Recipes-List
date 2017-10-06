@@ -11,6 +11,7 @@ import UIKit
 fileprivate extension Constants {
     static let recipeCellIdentifier = "Recipe Cell"
     static let recipeCellNibName = "RecipesListCell"
+    static let viewTitle = "Recipes"
 }
 
 protocol RecipesListViewControllerDelegate: class {
@@ -19,19 +20,29 @@ protocol RecipesListViewControllerDelegate: class {
 
 class RecipesListViewController: UIViewController {
     weak var delegate: RecipesListViewControllerDelegate?
+    
     private var viewModel: RecipesListViewModel
 
+    // MARK: Outlets
     @IBOutlet private weak var recipesListTableView: UITableView!
     @IBOutlet private weak var searchRecipesBar: UISearchBar!
     @IBOutlet private weak var sortTypeTextField: UITextField!
     
+    // MARK: Initializers
     init(viewModel: RecipesListViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: UI setup
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        title = Constants.viewTitle
         
         let sortTypePicker = UIPickerView()
         sortTypePicker.delegate = self
@@ -49,12 +60,9 @@ class RecipesListViewController: UIViewController {
             self?.showAlert(withTitle: "Error", message: error.localizedDescription)
         })
     }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 }
 
+// MARK: UITableViewDelegate, UITableViewDelegate
 extension RecipesListViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -83,6 +91,7 @@ extension RecipesListViewController: UITableViewDataSource, UITableViewDelegate 
     }
 }
 
+// MARK: UISearchBarDelegate
 extension RecipesListViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         viewModel.search(searchText: searchText)
@@ -94,6 +103,7 @@ extension RecipesListViewController: UISearchBarDelegate {
     }
 }
 
+// MARK: UIPickerViewDelegate, UIPickerViewDataSource
 extension RecipesListViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return Constants.sortTypesArray.count
