@@ -64,7 +64,7 @@ struct Recipe: JSONMappable {
             print("Recipe::init:Cannot parse \"difficulty\"-section")
         }
         
-        /*guard name != nil,
+        guard name != nil,
             imagesURLs != nil,
             lastUpdated != nil,
             instructions != nil,
@@ -73,6 +73,6 @@ struct Recipe: JSONMappable {
                                     code: Constants.invalidJSONDataError.code,
                                     userInfo: Constants.invalidJSONDataError.userInfo)
                 throw error
-        }*/
+        }
     }
 }

@@ -9,7 +9,7 @@
 import UIKit
 
 fileprivate extension Constants {
-    static let recipeCellIdentifier = "Recipe Cell"
+    static let recipeCellIdentifier = "Recipe Cell"    
 }
 
 protocol RecipesListViewControllerDelegate: class {
@@ -22,6 +22,7 @@ class RecipesListViewController: UIViewController {
 
     @IBOutlet private weak var recipesListTableView: UITableView!
     @IBOutlet private weak var searchRecipesBar: UISearchBar!
+    @IBOutlet private weak var sortTypeTextField: UITextField!
     
     init(viewModel: RecipesListViewModel) {
         self.viewModel = viewModel
@@ -30,6 +31,12 @@ class RecipesListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let sortTypePicker = UIPickerView()
+        sortTypePicker.delegate = self
+        sortTypePicker.dataSource = self
+        sortTypeTextField?.inputView = sortTypePicker
+        
         searchRecipesBar?.delegate = self
         recipesListTableView?.delegate = self
         recipesListTableView?.dataSource = self
@@ -39,7 +46,7 @@ class RecipesListViewController: UIViewController {
             self?.recipesListTableView.reloadData()
         })
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -77,5 +84,34 @@ extension RecipesListViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         viewModel.search(searchText: searchText)
         self.recipesListTableView.reloadData()
+    }
+}
+
+extension RecipesListViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return Constants.sortTypesArray.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return Constants.sortTypesArray[row].rawValue
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        let sortType = Constants.sortTypesArray[row]
+        sortTypeTextField?.text = sortType.rawValue
+        viewModel.sortType = sortType
+        recipesListTableView.reloadData()
+        
+        /*for pickerRow in form.rows {
+            if let cell = pickerRow.baseCell as? _FieldCell<String>,
+                cell.textField.isFirstResponder {
+                cell.textField.text = Constants.ringtones[row]
+                cell.row.value = Constants.ringtones[row]
+            }
+        }*/
+    }
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
     }
 }

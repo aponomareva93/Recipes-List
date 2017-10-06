@@ -13,6 +13,7 @@
             <connections>
                 <outlet property="recipesListTableView" destination="Adh-v6-ulM" id="G1a-Xn-zuT"/>
                 <outlet property="searchRecipesBar" destination="krH-Ds-OSa" id="nv9-MT-o1U"/>
+                <outlet property="sortTypeTextField" destination="HOh-la-qnH" id="s86-Yh-wqU"/>
                 <outlet property="view" destination="CPn-P0-bRR" id="39X-AP-VTZ"/>
             </connections>
         </placeholder>
@@ -22,11 +23,23 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Adh-v6-ulM">
-                    <rect key="frame" x="0.0" y="76" width="375" height="591"/>
+                    <rect key="frame" x="0.0" y="106" width="375" height="561"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sort:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rTf-ih-n8P">
+                    <rect key="frame" x="0.0" y="20" width="37.5" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Choose Sort Type" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HOh-la-qnH">
+                    <rect key="frame" x="37" y="20" width="338" height="30"/>
+                    <nil key="textColor"/>
+                    <fontDescription key="fontDescription" type="italicSystem" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
                 <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="krH-Ds-OSa">
-                    <rect key="frame" x="0.0" y="20" width="375" height="56"/>
+                    <rect key="frame" x="0.0" y="50" width="375" height="56"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="56" id="4j4-wE-kFH"/>
                     </constraints>
@@ -35,11 +48,18 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="krH-Ds-OSa" firstAttribute="top" secondItem="Sis-7C-sGK" secondAttribute="top" id="4Ww-2L-wJx"/>
+                <constraint firstItem="krH-Ds-OSa" firstAttribute="top" secondItem="Sis-7C-sGK" secondAttribute="top" constant="30" id="4Ww-2L-wJx"/>
+                <constraint firstItem="HOh-la-qnH" firstAttribute="top" secondItem="Sis-7C-sGK" secondAttribute="top" id="6Cx-KF-OlU"/>
+                <constraint firstItem="rTf-ih-n8P" firstAttribute="top" secondItem="Sis-7C-sGK" secondAttribute="top" id="8f4-Cs-uvo"/>
                 <constraint firstItem="krH-Ds-OSa" firstAttribute="trailing" secondItem="Sis-7C-sGK" secondAttribute="trailing" id="Geu-E4-NPu"/>
                 <constraint firstItem="krH-Ds-OSa" firstAttribute="leading" secondItem="Sis-7C-sGK" secondAttribute="leading" id="IgV-cj-dGU"/>
+                <constraint firstItem="rTf-ih-n8P" firstAttribute="leading" secondItem="Sis-7C-sGK" secondAttribute="leading" id="RVc-zj-l5m"/>
+                <constraint firstItem="HOh-la-qnH" firstAttribute="leading" secondItem="Sis-7C-sGK" secondAttribute="leading" constant="37" id="Z6f-Nw-OM2"/>
+                <constraint firstItem="krH-Ds-OSa" firstAttribute="top" secondItem="HOh-la-qnH" secondAttribute="bottom" id="fII-0D-7hl"/>
                 <constraint firstItem="Adh-v6-ulM" firstAttribute="top" secondItem="krH-Ds-OSa" secondAttribute="bottom" id="gUg-Sx-4QE"/>
+                <constraint firstItem="krH-Ds-OSa" firstAttribute="top" secondItem="rTf-ih-n8P" secondAttribute="bottom" id="mAA-L3-dhb"/>
                 <constraint firstItem="Adh-v6-ulM" firstAttribute="leading" secondItem="Sis-7C-sGK" secondAttribute="leading" id="rAe-Rc-a2V"/>
+                <constraint firstItem="HOh-la-qnH" firstAttribute="trailing" secondItem="Sis-7C-sGK" secondAttribute="trailing" id="u2W-ud-V6t"/>
                 <constraint firstItem="Adh-v6-ulM" firstAttribute="bottom" secondItem="Sis-7C-sGK" secondAttribute="bottom" id="xhY-4N-uhq"/>
                 <constraint firstItem="Adh-v6-ulM" firstAttribute="trailing" secondItem="Sis-7C-sGK" secondAttribute="trailing" id="yEc-Dx-tL5"/>
             </constraints>

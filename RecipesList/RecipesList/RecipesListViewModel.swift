@@ -28,6 +28,23 @@ class RecipesListViewModel {
         return nil
     }
     
+    var sortType: Constants.SortTypes? {
+        didSet {
+            if let sortType = sortType {
+                switch sortType {
+                case .alphabeticallySort:
+                    recipes = recipesStorage.sorted {
+                        $0.name!.localizedCaseInsensitiveCompare($1.name!) == ComparisonResult.orderedAscending
+                    }
+                case .dateSort:
+                    recipes = recipesStorage.sorted {
+                        $0.lastUpdated! > $1.lastUpdated!
+                    }
+                }
+            }
+        }
+    }
+    
     func getRecipes(completionHandler: @escaping () -> Void) {
         NetworkManager.fetchRecipes(completionHandler: {[weak self] (responseObject: Response<Recipe>) in
             switch responseObject {
