@@ -90,7 +90,6 @@ extension RecipesListViewController: UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("!!!")
         delegate?.recipesListViewControllerDidTapRecipe(recipesListViewController: self,
                                                         recipe: viewModel.recipe(row: indexPath.row))
     }
