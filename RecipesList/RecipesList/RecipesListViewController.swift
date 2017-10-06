@@ -71,7 +71,7 @@ extension RecipesListViewController: UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 105.0
+        return Constants.recipeDetailsCellHeight
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -101,14 +101,6 @@ extension RecipesListViewController: UIPickerViewDelegate, UIPickerViewDataSourc
         sortTypeTextField?.text = sortType.rawValue
         viewModel.sortType = sortType
         recipesListTableView.reloadData()
-        
-        /*for pickerRow in form.rows {
-            if let cell = pickerRow.baseCell as? _FieldCell<String>,
-                cell.textField.isFirstResponder {
-                cell.textField.text = Constants.ringtones[row]
-                cell.row.value = Constants.ringtones[row]
-            }
-        }*/
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {

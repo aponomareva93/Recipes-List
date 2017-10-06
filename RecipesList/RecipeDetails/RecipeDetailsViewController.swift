@@ -8,6 +8,11 @@
 
 import UIKit
 
+fileprivate extension Constants {
+    static let maxDifficultyLevel = 5
+    static let difficultyLevelItem = "🍗"
+}
+
 protocol RecipeDetailsViewControllerDelegate: class {
     func recipeDetailsViewControllerDidTapClose(_ recipeDetailsViewController: RecipeDetailsViewController?)
 }
@@ -18,6 +23,9 @@ class RecipeDetailsViewController: UIViewController {
     @IBOutlet weak var photosPageControl: UIPageControl!    
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var instructionsTextView: UITextView!
+    @IBOutlet weak var difficultyLevelLabel: UILabel!
+    @IBOutlet weak var maxDifficultyLevelLabel: UILabel!    
+    @IBOutlet weak var difficultyLevelStackView: UIStackView!
     
     weak var delegate: RecipeDetailsViewControllerDelegate?
     private var viewModel: RecipeDetailsViewModel
@@ -49,8 +57,7 @@ class RecipeDetailsViewController: UIViewController {
         
         descriptionLabel?.numberOfLines = 0
         descriptionLabel?.lineBreakMode = .byWordWrapping
-        if let description = viewModel.description,
-            !description.isEmpty {
+        if !description.isEmpty {
             descriptionLabel?.text = "Description: " + description
         } else {
             descriptionLabel?.isHidden = true
@@ -83,6 +90,23 @@ class RecipeDetailsViewController: UIViewController {
             photoImageView?.addGestureRecognizer(rightSwipe)
         } else {
             photosPageControl.isHidden = true
+        }
+        
+        if viewModel.difficulty > 0 {
+            var stringForDifficultyLabel = String()
+            for _ in 0..<viewModel.difficulty {
+                stringForDifficultyLabel.append(Constants.difficultyLevelItem)
+            }
+            
+            var stringForMaxDifficultyLabel = String()
+            for _ in viewModel.difficulty..<Constants.maxDifficultyLevel {
+                stringForMaxDifficultyLabel.append(Constants.difficultyLevelItem)
+            }
+            
+            difficultyLevelLabel?.text = "Difficulty: " + stringForDifficultyLabel
+            maxDifficultyLevelLabel?.text = stringForMaxDifficultyLabel
+        } else {
+            difficultyLevelStackView?.isHidden = true
         }
     }
     

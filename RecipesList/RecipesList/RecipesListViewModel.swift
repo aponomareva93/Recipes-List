@@ -34,11 +34,19 @@ class RecipesListViewModel {
                 switch sortType {
                 case .alphabeticallySort:
                     recipes = recipesStorage.sorted {
-                        $0.name!.localizedCaseInsensitiveCompare($1.name!) == ComparisonResult.orderedAscending
+                        guard let nameFirst = $0.name,
+                            let nameSecond = $1.name else {
+                                return false
+                        }
+                        return nameFirst.localizedCaseInsensitiveCompare(nameSecond) == ComparisonResult.orderedAscending
                     }
                 case .dateSort:
                     recipes = recipesStorage.sorted {
-                        $0.lastUpdated! > $1.lastUpdated!
+                        guard let dateFirst = $0.lastUpdated,
+                            let dateSecond = $1.lastUpdated else {
+                                return false
+                        }
+                        return dateFirst > dateSecond
                     }
                 }
             }

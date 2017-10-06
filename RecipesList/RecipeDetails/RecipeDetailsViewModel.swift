@@ -11,20 +11,30 @@ import Foundation
 class RecipeDetailsViewModel {
     private let recipe: Recipe?
     
-    var name: String? {
-        return recipe?.name
+    var name: String {
+        return recipe?.name ?? String()
     }
     
-    var description: String? {
-        return recipe?.description
+    var description: String {
+        return recipe?.description ?? String()
     }
     
-    var instructions: String? {
-        return recipe?.instructions?.replaceBrByNewLine()
+    var instructions: String {
+        if let instructions = recipe?.instructions {
+            return instructions.replaceBrByNewLine()
+        }
+        return String()
     }
     
     var imagesCount: Int {
         return recipe?.imagesURLs?.count ?? 0
+    }
+    
+    var difficulty: Int {
+        if let difficultyLevel = recipe?.difficulty {
+            return difficultyLevel
+        }
+        return 0
     }
     
     init(recipe: Recipe? = nil) {

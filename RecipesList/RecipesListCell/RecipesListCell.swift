@@ -15,6 +15,8 @@ class RecipesListCell: UITableViewCell {
     @IBOutlet private weak var recipeDescriptionLabel: UILabel!
     
     func setup(viewModel: RecipesListCellViewModel) {
+        frame.size.height = Constants.recipeDetailsCellHeight
+        
         recipeNameLabel?.text = viewModel.name
         recipeNameLabel?.numberOfLines = 0
         recipeNameLabel?.lineBreakMode = .byWordWrapping

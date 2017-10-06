@@ -149,6 +149,7 @@
 		955F57471F84B38C00ABE75F /* RecipesList */ = {
 			isa = PBXGroup;
 			children = (
+				956018C01F87365500C5A5DA /* Images */,
 				9547A1371F84B5E900E707C8 /* Coordinators */,
 				9547A1341F84B57F00E707C8 /* RecipeDetails */,
 				9547A12F1F84B54900E707C8 /* RecipesList */,
@@ -157,12 +158,19 @@
 				9547A1471F84D35A00E707C8 /* NetworkManager.swift */,
 				9547A1491F84D6F400E707C8 /* Constants.swift */,
 				955F57481F84B38C00ABE75F /* AppDelegate.swift */,
-				955E65F81F86527C0061DEDA /* no-image.png */,
 				955F574F1F84B38C00ABE75F /* Assets.xcassets */,
 				955F57511F84B38C00ABE75F /* LaunchScreen.storyboard */,
 				955F57541F84B38C00ABE75F /* Info.plist */,
 			);
 			path = RecipesList;
+			sourceTree = "<group>";
+		};
+		956018C01F87365500C5A5DA /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				955E65F81F86527C0061DEDA /* no-image.png */,
+			);
+			path = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
