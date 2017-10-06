@@ -4,7 +4,6 @@ platform :ios, '10.0'
 target ‘RecipesList’ do
   use_frameworks!
   pod 'SwiftLint'
-  pod 'Alamofire'
 end
 
 post_install do |installer|

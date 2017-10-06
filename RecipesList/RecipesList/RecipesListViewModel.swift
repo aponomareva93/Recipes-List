@@ -54,7 +54,7 @@ class RecipesListViewModel {
     }
     
     func getRecipes(updateUIHandler: @escaping () -> Void) {
-        NetworkManager.fetchRecipes(completionHandler: {[weak self] (responseObject: Response<Recipe>) in
+        NetworkManager.fetchRecipes(completion: {[weak self] (responseObject: Response<Recipe>) in
             switch responseObject {
             case .success(let recipes):
                 self?.recipesStorage = recipes
