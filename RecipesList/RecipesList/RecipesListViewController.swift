@@ -9,7 +9,8 @@
 import UIKit
 
 fileprivate extension Constants {
-    static let recipeCellIdentifier = "Recipe Cell"    
+    static let recipeCellIdentifier = "Recipe Cell"
+    static let recipeCellNibName = "RecipesListCell"
 }
 
 protocol RecipesListViewControllerDelegate: class {
@@ -40,9 +41,9 @@ class RecipesListViewController: UIViewController {
         searchRecipesBar?.delegate = self
         recipesListTableView?.delegate = self
         recipesListTableView?.dataSource = self
-        recipesListTableView?.register(UINib.init(nibName: "RecipesListCell", bundle: nil),
+        recipesListTableView?.register(UINib.init(nibName: Constants.recipeCellNibName, bundle: nil),
                                        forCellReuseIdentifier: Constants.recipeCellIdentifier)
-        self.viewModel.getRecipes(completionHandler: { [weak self] in
+        self.viewModel.getRecipes(updateUIHandler: { [weak self] in
             self?.recipesListTableView.reloadData()
         })
     }

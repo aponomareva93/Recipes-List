@@ -53,13 +53,13 @@ class RecipesListViewModel {
         }
     }
     
-    func getRecipes(completionHandler: @escaping () -> Void) {
+    func getRecipes(updateUIHandler: @escaping () -> Void) {
         NetworkManager.fetchRecipes(completionHandler: {[weak self] (responseObject: Response<Recipe>) in
             switch responseObject {
             case .success(let recipes):
                 self?.recipesStorage = recipes
                 DispatchQueue.main.async {
-                    completionHandler()
+                    updateUIHandler()
                 }
             case .failure(let error):
                 print(error)

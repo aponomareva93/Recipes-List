@@ -18,14 +18,14 @@ protocol RecipeDetailsViewControllerDelegate: class {
 }
 
 class RecipeDetailsViewController: UIViewController {
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var photoImageView: UIImageView!
-    @IBOutlet weak var photosPageControl: UIPageControl!    
-    @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var instructionsTextView: UITextView!
-    @IBOutlet weak var difficultyLevelLabel: UILabel!
-    @IBOutlet weak var maxDifficultyLevelLabel: UILabel!    
-    @IBOutlet weak var difficultyLevelStackView: UIStackView!
+    @IBOutlet private weak var nameLabel: UILabel!
+    @IBOutlet private weak var photoImageView: UIImageView!
+    @IBOutlet private weak var photosPageControl: UIPageControl!
+    @IBOutlet private weak var descriptionLabel: UILabel!
+    @IBOutlet private weak var instructionsTextView: UITextView!
+    @IBOutlet private weak var difficultyLevelLabel: UILabel!
+    @IBOutlet private weak var maxDifficultyLevelLabel: UILabel!
+    @IBOutlet private weak var difficultyLevelStackView: UIStackView!
     
     weak var delegate: RecipeDetailsViewControllerDelegate?
     private var viewModel: RecipeDetailsViewModel
@@ -37,7 +37,7 @@ class RecipeDetailsViewController: UIViewController {
         return cancelBarButtonItem
     }()
     
-    @objc func cancelButtonTapped(sender: UIBarButtonItem) {
+    @objc private func cancelButtonTapped(sender: UIBarButtonItem) {
         delegate?.recipeDetailsViewControllerDidTapClose(self)
     }
     
@@ -45,6 +45,10 @@ class RecipeDetailsViewController: UIViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         navigationItem.leftBarButtonItem = cancelBarButtonItem
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
@@ -57,8 +61,8 @@ class RecipeDetailsViewController: UIViewController {
         
         descriptionLabel?.numberOfLines = 0
         descriptionLabel?.lineBreakMode = .byWordWrapping
-        if !description.isEmpty {
-            descriptionLabel?.text = "Description: " + description
+        if !viewModel.description.isEmpty {
+            descriptionLabel?.text = "Description: " + viewModel.description
         } else {
             descriptionLabel?.isHidden = true
         }
@@ -110,13 +114,13 @@ class RecipeDetailsViewController: UIViewController {
         }
     }
     
-    @objc func pageControlTapHandler(sender: UIPageControl) {
+    @objc private func pageControlTapHandler(sender: UIPageControl) {
         viewModel.getImageFromURL(imageNumber: photosPageControl.currentPage, updateUIHandler: { [weak self] data in
             self?.photoImageView?.image = UIImage(data: data)
         })
     }
     
-    @objc func swipePhotos(swipeGesture: UISwipeGestureRecognizer) {
+    @objc private func swipePhotos(swipeGesture: UISwipeGestureRecognizer) {
         switch swipeGesture.direction {
         case .right:
             if photosPageControl.currentPage > 0 {
@@ -135,9 +139,5 @@ class RecipeDetailsViewController: UIViewController {
         default:
             break
         }
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }
