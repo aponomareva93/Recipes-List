@@ -15,7 +15,6 @@
                 <outlet property="difficultyLevelLabel" destination="nBP-b6-Zkg" id="tdK-gK-ad2"/>
                 <outlet property="difficultyLevelStackView" destination="Yqb-7s-zrb" id="mcU-Dq-Tu7"/>
                 <outlet property="instructionsTextView" destination="BEK-V8-jHp" id="xjI-oH-zP1"/>
-                <outlet property="maxDifficultyLevelLabel" destination="Een-Ya-DGE" id="ecr-Hg-XKd"/>
                 <outlet property="nameLabel" destination="4CN-yJ-5ta" id="iJ6-KW-JT6"/>
                 <outlet property="photoImageView" destination="ifp-sb-S1o" id="avI-PB-U6l"/>
                 <outlet property="photosPageControl" destination="EtR-Ei-A2g" id="Gpq-9c-Vn0"/>
@@ -45,17 +44,11 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yqb-7s-zrb">
-                                    <rect key="frame" x="130.5" y="56.5" width="82" height="18"/>
+                                    <rect key="frame" x="133.5" y="56.5" width="76.5" height="18"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nBP-b6-Zkg">
-                                            <rect key="frame" x="0.0" y="0.0" width="40" height="18"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Difficulty: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nBP-b6-Zkg">
+                                            <rect key="frame" x="0.0" y="0.0" width="76.5" height="18"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Een-Ya-DGE">
-                                            <rect key="frame" x="40" y="0.0" width="42" height="18"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>

@@ -36,8 +36,8 @@ class NetworkManager {
         if let url = url {
             URLSession.shared.dataTask(with: url, completionHandler: {(data, response, error) -> Void in
                 if let jsonObj = try? JSONSerialization.jsonObject(with: data!,
-                                                                   options: .allowFragments) as? Dictionary<String, Any> {
-                    if let dictionary = jsonObj,
+                                                                   options: .allowFragments) as? Dictionary<String, Any>,
+                    let dictionary = jsonObj,
                         let JSONArray = dictionary[Constants.RecipesJSONArrayName] as? [[String: Any]] {
                         var JSONElementsArray = [T]()
                         for JSONElement in JSONArray {
@@ -50,12 +50,11 @@ class NetworkManager {
                         }
                         completion(.success(JSONElementsArray))
                     } else {
-                        let error = NSError(domain: Constants.invalidJSONResponseError.domain,
-                                            code: Constants.invalidJSONResponseError.code,
-                                            userInfo: Constants.invalidJSONResponseError.userInfo)
+                    let error = NSError(domain: Constants.invalidJSONResponseError.domain,
+                                                   code: Constants.invalidJSONResponseError.code,
+                                                   userInfo: Constants.invalidJSONResponseError.userInfo)
                         completion(.failure(error))
                     }
-                }
             }).resume()
         } else {
             let error = NSError(domain: Constants.invalidURLError.domain,

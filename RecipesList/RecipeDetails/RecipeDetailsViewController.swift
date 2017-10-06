@@ -24,7 +24,6 @@ class RecipeDetailsViewController: UIViewController {
     @IBOutlet private weak var descriptionLabel: UILabel!
     @IBOutlet private weak var instructionsTextView: UITextView!
     @IBOutlet private weak var difficultyLevelLabel: UILabel!
-    @IBOutlet private weak var maxDifficultyLevelLabel: UILabel!
     @IBOutlet private weak var difficultyLevelStackView: UIStackView!
     
     weak var delegate: RecipeDetailsViewControllerDelegate?
@@ -97,18 +96,14 @@ class RecipeDetailsViewController: UIViewController {
         }
         
         if viewModel.difficulty > 0 {
-            var stringForDifficultyLabel = String()
-            for _ in 0..<viewModel.difficulty {
-                stringForDifficultyLabel.append(Constants.difficultyLevelItem)
+            for item in 0..<Constants.maxDifficultyLevel {
+                let label = UILabel()
+                label.text = Constants.difficultyLevelItem
+                if item >= viewModel.difficulty {
+                    label.alpha = 0.25
+                }
+                difficultyLevelStackView?.addArrangedSubview(label)
             }
-            
-            var stringForMaxDifficultyLabel = String()
-            for _ in viewModel.difficulty..<Constants.maxDifficultyLevel {
-                stringForMaxDifficultyLabel.append(Constants.difficultyLevelItem)
-            }
-            
-            difficultyLevelLabel?.text = "Difficulty: " + stringForDifficultyLabel
-            maxDifficultyLevelLabel?.text = stringForMaxDifficultyLabel
         } else {
             difficultyLevelStackView?.isHidden = true
         }
