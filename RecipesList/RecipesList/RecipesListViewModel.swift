@@ -23,29 +23,6 @@ class RecipesListViewModel {
         return nil
     }
     
-    var sortType: Constants.SortTypes? {
-        didSet {
-            if let sortType = sortType {
-                switch sortType {
-                case .alphabeticallySort:
-                    recipesStorage = recipesStorage.sorted {
-                        sortStrings(firstString: $0.name, secondString: $1.name)
-                    }
-                    recipes = recipes.sorted {
-                        sortStrings(firstString: $0.name, secondString: $1.name)
-                    }
-                case .dateSort:
-                    recipesStorage = recipesStorage.sorted {
-                        sortNumbers(firstNumber: $0.lastUpdated, secondNumer: $1.lastUpdated)
-                    }
-                    recipes = recipes.sorted {
-                        sortNumbers(firstNumber: $0.lastUpdated, secondNumer: $1.lastUpdated)
-                    }
-                }
-            }
-        }
-    }
-    
     func getRecipes(updateUIHandler: @escaping () -> Void, errorHandler: ((_ error: NSError) -> Void)? = nil) {
         NetworkManager.fetchRecipes(completion: {[weak self] (responseObject: Response<Recipe>) in
             switch responseObject {
@@ -68,10 +45,29 @@ class RecipesListViewModel {
     }
     
     func search(searchText: String) {
-        recipes = searchText.isEmpty ? recipesStorage : recipes.filter { (item: Recipe) -> Bool in
+        recipes = searchText.isEmpty ? recipesStorage : recipesStorage.filter { (item: Recipe) -> Bool in
             return (item.name?.range(of: searchText, options: .caseInsensitive, range: nil, locale: nil) != nil
                 || item.description?.range(of: searchText, options: .caseInsensitive, range: nil, locale: nil) != nil
                 || item.instructions?.range(of: searchText, options: .caseInsensitive, range: nil, locale: nil) != nil)
+        }
+    }
+    
+    func sort(sortType: Constants.SortTypes) {
+        switch sortType {
+        case .alphabeticallySort:
+            recipesStorage = recipesStorage.sorted {
+                sortStrings(firstString: $0.name, secondString: $1.name)
+            }
+            recipes = recipes.sorted {
+                sortStrings(firstString: $0.name, secondString: $1.name)
+            }
+        case .dateSort:
+            recipesStorage = recipesStorage.sorted {
+                sortNumbers(firstNumber: $0.lastUpdated, secondNumer: $1.lastUpdated)
+            }
+            recipes = recipes.sorted {
+                sortNumbers(firstNumber: $0.lastUpdated, secondNumer: $1.lastUpdated)
+            }
         }
     }
 }

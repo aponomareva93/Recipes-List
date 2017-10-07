@@ -55,9 +55,10 @@ class RecipesListViewController: UIViewController {
         recipesListTableView?.register(UINib.init(nibName: Constants.recipeCellNibName, bundle: nil),
                                        forCellReuseIdentifier: Constants.recipeCellIdentifier)
         self.viewModel.getRecipes(updateUIHandler: { [weak self] in
-            sortTypePicker.selectRow(0, inComponent: 0, animated: false)
-            self?.viewModel.sortType = Constants.sortTypesArray[0]
-            self?.sortTypeTextField.text = Constants.sortTypesArray[0].rawValue
+            if !Constants.sortTypesArray.isEmpty {
+                self?.viewModel.sort(sortType: Constants.sortTypesArray[0])
+                self?.sortTypeTextField.text = Constants.sortTypesArray[0].rawValue
+            }
             
             self?.recipesListTableView.reloadData()
         }, errorHandler: { [weak self] error in
@@ -120,7 +121,7 @@ extension RecipesListViewController: UIPickerViewDelegate, UIPickerViewDataSourc
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let sortType = Constants.sortTypesArray[row]
         sortTypeTextField?.text = sortType.rawValue
-        viewModel.sortType = sortType
+        viewModel.sort(sortType: sortType)
         sortTypeTextField?.resignFirstResponder()
         recipesListTableView.reloadData()
     }
