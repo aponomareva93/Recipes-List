@@ -13,12 +13,7 @@ class RecipesListViewModel {
         return recipes.count
     }
     
-    private var recipesStorage = [Recipe]() {
-        didSet {
-            recipes = recipesStorage
-        }
-    }
-    
+    private var recipesStorage = [Recipe]()
     private var recipes = [Recipe]()
     
     func recipe(row: Int) -> Recipe? {
@@ -33,20 +28,18 @@ class RecipesListViewModel {
             if let sortType = sortType {
                 switch sortType {
                 case .alphabeticallySort:
-                    recipes = recipesStorage.sorted {
-                        guard let nameFirst = $0.name,
-                            let nameSecond = $1.name else {
-                                return false
-                        }
-                        return nameFirst.localizedCaseInsensitiveCompare(nameSecond) == ComparisonResult.orderedAscending
+                    recipesStorage = recipesStorage.sorted {
+                        sortStrings(firstString: $0.name, secondString: $1.name)
+                    }
+                    recipes = recipes.sorted {
+                        sortStrings(firstString: $0.name, secondString: $1.name)
                     }
                 case .dateSort:
-                    recipes = recipesStorage.sorted {
-                        guard let dateFirst = $0.lastUpdated,
-                            let dateSecond = $1.lastUpdated else {
-                                return false
-                        }
-                        return dateFirst > dateSecond
+                    recipesStorage = recipesStorage.sorted {
+                        sortNumbers(firstNumber: $0.lastUpdated, secondNumer: $1.lastUpdated)
+                    }
+                    recipes = recipes.sorted {
+                        sortNumbers(firstNumber: $0.lastUpdated, secondNumer: $1.lastUpdated)
                     }
                 }
             }
@@ -58,6 +51,7 @@ class RecipesListViewModel {
             switch responseObject {
             case .success(let recipes):
                 self?.recipesStorage = recipes
+                self?.recipes = recipes
                 DispatchQueue.main.async {
                     updateUIHandler()
                 }
@@ -74,11 +68,29 @@ class RecipesListViewModel {
     }
     
     func search(searchText: String) {
-        let filteredData = searchText.isEmpty ? recipesStorage : recipesStorage.filter { (item: Recipe) -> Bool in
+        recipes = searchText.isEmpty ? recipesStorage : recipes.filter { (item: Recipe) -> Bool in
             return (item.name?.range(of: searchText, options: .caseInsensitive, range: nil, locale: nil) != nil
                 || item.description?.range(of: searchText, options: .caseInsensitive, range: nil, locale: nil) != nil
                 || item.instructions?.range(of: searchText, options: .caseInsensitive, range: nil, locale: nil) != nil)
         }
-        recipes = filteredData
+    }
+}
+
+// MARK: Sorting
+fileprivate extension RecipesListViewModel {
+    func sortStrings(firstString: String?, secondString: String?) -> Bool {
+        guard let firstString = firstString,
+            let secondString = secondString else {
+                return false
+        }
+        return firstString.localizedCaseInsensitiveCompare(secondString) == ComparisonResult.orderedAscending
+    }
+    
+    func sortNumbers(firstNumber: Int?, secondNumer: Int?) -> Bool {
+        guard let firstNumber = firstNumber,
+            let secondNumer = secondNumer else {
+                return false
+        }
+        return firstNumber > secondNumer
     }
 }
