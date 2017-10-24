@@ -27,7 +27,8 @@
 		955F57491F84B38C00ABE75F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955F57481F84B38C00ABE75F /* AppDelegate.swift */; };
 		955F574B1F84B38C00ABE75F /* RecipesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955F574A1F84B38C00ABE75F /* RecipesListViewController.swift */; };
 		955F57501F84B38C00ABE75F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 955F574F1F84B38C00ABE75F /* Assets.xcassets */; };
-		955F57531F84B38C00ABE75F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 955F57511F84B38C00ABE75F /* LaunchScreen.storyboard */; };
+		95F9F6161F9F2B95000BCF89 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 95F9F6151F9F2B95000BCF89 /* LaunchScreen.xib */; };
+		95F9F6181F9F2FC8000BCF89 /* food_splash.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 95F9F6171F9F2FC8000BCF89 /* food_splash.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,8 +54,9 @@
 		955F57481F84B38C00ABE75F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		955F574A1F84B38C00ABE75F /* RecipesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesListViewController.swift; sourceTree = "<group>"; };
 		955F574F1F84B38C00ABE75F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		955F57521F84B38C00ABE75F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		955F57541F84B38C00ABE75F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		95F9F6151F9F2B95000BCF89 /* LaunchScreen.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
+		95F9F6171F9F2FC8000BCF89 /* food_splash.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = food_splash.jpg; sourceTree = "<group>"; };
 		AB022C491FC496933CD5D943 /* Pods-RecipesList.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RecipesList.release.xcconfig"; path = "Pods/Target Support Files/Pods-RecipesList/Pods-RecipesList.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -158,8 +160,8 @@
 				9547A1471F84D35A00E707C8 /* NetworkManager.swift */,
 				9547A1491F84D6F400E707C8 /* Constants.swift */,
 				955F57481F84B38C00ABE75F /* AppDelegate.swift */,
+				95F9F6151F9F2B95000BCF89 /* LaunchScreen.xib */,
 				955F574F1F84B38C00ABE75F /* Assets.xcassets */,
-				955F57511F84B38C00ABE75F /* LaunchScreen.storyboard */,
 				955F57541F84B38C00ABE75F /* Info.plist */,
 			);
 			path = RecipesList;
@@ -169,6 +171,7 @@
 			isa = PBXGroup;
 			children = (
 				955E65F81F86527C0061DEDA /* no-image.png */,
+				95F9F6171F9F2FC8000BCF89 /* food_splash.jpg */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -238,9 +241,10 @@
 			files = (
 				955E65F91F8655AB0061DEDA /* no-image.png in Resources */,
 				9547A14E1F84F7EE00E707C8 /* RecipesListCell.xib in Resources */,
-				955F57531F84B38C00ABE75F /* LaunchScreen.storyboard in Resources */,
+				95F9F6181F9F2FC8000BCF89 /* food_splash.jpg in Resources */,
 				9547A1331F84B56D00E707C8 /* RecipeDetailsViewController.xib in Resources */,
 				9547A12E1F84B53600E707C8 /* RecipesListViewController.xib in Resources */,
+				95F9F6161F9F2B95000BCF89 /* LaunchScreen.xib in Resources */,
 				955F57501F84B38C00ABE75F /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -337,17 +341,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		955F57511F84B38C00ABE75F /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				955F57521F84B38C00ABE75F /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		955F57551F84B38C00ABE75F /* Debug */ = {

@@ -34,9 +34,9 @@ class NetworkManager {
     class func fetchRecipes<T>(completion: @escaping (Response<T>) -> Void) {
         let url = URL(string: Constants.recipesAPIUrl)
         if let url = url {
-            URLSession.shared.dataTask(with: url, completionHandler: {(data, response, error) -> Void in
+            URLSession.shared.dataTask(with: url, completionHandler: {(data, _, error) -> Void in
                 if let jsonObj = try? JSONSerialization.jsonObject(with: data!,
-                                                                   options: .allowFragments) as? Dictionary<String, Any>,
+                                                                   options: .allowFragments) as? [String: Any],
                     let dictionary = jsonObj,
                         let JSONArray = dictionary[Constants.RecipesJSONArrayName] as? [[String: Any]] {
                         var JSONElementsArray = [T]()

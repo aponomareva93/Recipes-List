@@ -23,7 +23,7 @@ struct Recipe: JSONMappable {
     var description: String?
     var difficulty: Int?
     
-    init(fromJSON JSON: [String : Any]?) throws {
+    init(fromJSON JSON: [String: Any]?) throws {
         if let name = JSON?["name"] as? String {
             self.name = name
         } else {
