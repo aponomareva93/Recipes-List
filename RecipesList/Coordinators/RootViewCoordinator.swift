@@ -11,5 +11,5 @@ import UIKit
 typealias RootViewCoordinator = Coordinator & RootViewControllerProvider
 
 protocol RootViewControllerProvider: class {
-    var rootViewController: UIViewController { get }
+  var rootViewController: UIViewController { get }
 }

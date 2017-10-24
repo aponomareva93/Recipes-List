@@ -9,16 +9,16 @@
 import UIKit
 
 struct Constants {
-    static let recipeNameColor = UIColor.brown
-    
-    enum SortTypes: String {
-        case dateSort = "By Date"
-        case alphabeticallySort = "Alphabetically"
-    }
-    static let sortTypesArray = [
-        SortTypes.dateSort,
-        SortTypes.alphabeticallySort
-    ]
-    
-    static let recipeDetailsCellHeight: CGFloat = 105.0
+  static let recipeNameColor = UIColor.brown
+  
+  enum SortTypes: String {
+    case dateSort = "By Date"
+    case alphabeticallySort = "Alphabetically"
+  }
+  static let sortTypesArray = [
+    SortTypes.dateSort,
+    SortTypes.alphabeticallySort
+  ]
+  
+  static let recipeDetailsCellHeight: CGFloat = 105.0
 }

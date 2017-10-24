@@ -9,84 +9,94 @@
 import Foundation
 
 class RecipesListViewModel {    
-    var recipesCount: Int {
-        return recipes.count
+  var recipesCount: Int {
+    return recipes.count
+  }
+  
+  private var recipesStorage = [Recipe]()
+  private var recipes = [Recipe]()
+  
+  func recipe(row: Int) -> Recipe? {
+    if recipes.indices.contains(row) {
+      return recipes[row]
     }
-    
-    private var recipesStorage = [Recipe]()
-    private var recipes = [Recipe]()
-    
-    func recipe(row: Int) -> Recipe? {
-        if recipes.indices.contains(row) {
-            return recipes[row]
+    return nil
+  }
+  
+  func getRecipes(updateUIHandler: @escaping () -> Void,
+                  errorHandler: ((_ error: NSError) -> Void)? = nil) {
+    NetworkManager.fetchRecipes(completionHandler: {[weak self] (responseObject: Response<Recipe>) in
+      switch responseObject {
+      case .success(let recipes):
+        self?.recipesStorage = recipes
+        self?.recipes = recipes
+        DispatchQueue.main.async {
+          updateUIHandler()
         }
-        return nil
-    }
-    
-    func getRecipes(updateUIHandler: @escaping () -> Void, errorHandler: ((_ error: NSError) -> Void)? = nil) {
-        NetworkManager.fetchRecipes(completion: {[weak self] (responseObject: Response<Recipe>) in
-            switch responseObject {
-            case .success(let recipes):
-                self?.recipesStorage = recipes
-                self?.recipes = recipes
-                DispatchQueue.main.async {
-                    updateUIHandler()
-                }
-            case .failure(let error):
-                if errorHandler != nil {
-                    DispatchQueue.main.async {
-                        errorHandler?(error)
-                    }
-                } else {
-                    print(error)
-                }
-            }
-        })
-    }
-    
-    func search(searchText: String) {
-        recipes = searchText.isEmpty ? recipesStorage : recipesStorage.filter { (item: Recipe) -> Bool in
-            return (item.name?.range(of: searchText, options: .caseInsensitive, range: nil, locale: nil) != nil
-                || item.description?.range(of: searchText, options: .caseInsensitive, range: nil, locale: nil) != nil
-                || item.instructions?.range(of: searchText, options: .caseInsensitive, range: nil, locale: nil) != nil)
+      case .failure(let error):
+        if errorHandler != nil {
+          DispatchQueue.main.async {
+            errorHandler?(error)
+          }
+        } else {
+          print(error)
         }
+      }
+    })
+  }
+  
+  func search(searchText: String) {
+    recipes = searchText.isEmpty ? recipesStorage : recipesStorage.filter { (item: Recipe) -> Bool in
+      return (item.name?.range(of: searchText,
+                               options: .caseInsensitive,
+                               range: nil,
+                               locale: nil) != nil
+        || item.description?.range(of: searchText,
+                                   options: .caseInsensitive,
+                                   range: nil,
+                                   locale: nil) != nil
+        || item.instructions?.range(of: searchText,
+                                    options: .caseInsensitive,
+                                    range: nil,
+                                    locale: nil) != nil)
     }
-    
-    func sort(sortType: Constants.SortTypes) {
-        switch sortType {
-        case .alphabeticallySort:
-            recipesStorage = recipesStorage.sorted {
-                sortStrings(firstString: $0.name, secondString: $1.name)
-            }
-            recipes = recipes.sorted {
-                sortStrings(firstString: $0.name, secondString: $1.name)
-            }
-        case .dateSort:
-            recipesStorage = recipesStorage.sorted {
-                sortNumbers(firstNumber: $0.lastUpdated, secondNumer: $1.lastUpdated)
-            }
-            recipes = recipes.sorted {
-                sortNumbers(firstNumber: $0.lastUpdated, secondNumer: $1.lastUpdated)
-            }
-        }
+  }
+  
+  func sort(sortType: Constants.SortTypes) {
+    switch sortType {
+    case .alphabeticallySort:
+      recipesStorage = recipesStorage.sorted {
+        sortStrings(firstString: $0.name, secondString: $1.name)
+      }
+      recipes = recipes.sorted {
+        sortStrings(firstString: $0.name, secondString: $1.name)
+      }
+    case .dateSort:
+      recipesStorage = recipesStorage.sorted {
+        sortNumbers(firstNumber: $0.lastUpdated, secondNumer: $1.lastUpdated)
+      }
+      recipes = recipes.sorted {
+        sortNumbers(firstNumber: $0.lastUpdated, secondNumer: $1.lastUpdated)
+      }
     }
+  }
 }
 
 // MARK: Sorting
 fileprivate extension RecipesListViewModel {
-    func sortStrings(firstString: String?, secondString: String?) -> Bool {
-        guard let firstString = firstString,
-            let secondString = secondString else {
-                return false
-        }
-        return firstString.localizedCaseInsensitiveCompare(secondString) == ComparisonResult.orderedAscending
+  func sortStrings(firstString: String?, secondString: String?) -> Bool {
+    guard let firstString = firstString,
+      let secondString = secondString else {
+        return false
     }
-    
-    func sortNumbers(firstNumber: Int?, secondNumer: Int?) -> Bool {
-        guard let firstNumber = firstNumber,
-            let secondNumer = secondNumer else {
-                return false
-        }
-        return firstNumber > secondNumer
+    return firstString.localizedCaseInsensitiveCompare(secondString) == ComparisonResult.orderedAscending
+  }
+  
+  func sortNumbers(firstNumber: Int?, secondNumer: Int?) -> Bool {
+    guard let firstNumber = firstNumber,
+      let secondNumer = secondNumer else {
+        return false
     }
+    return firstNumber > secondNumer
+  }
 }

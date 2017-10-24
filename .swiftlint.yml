@@ -37,5 +37,5 @@ type_name:
   excluded:
     - T
 
-line_length: 130
+line_length: 110
 function_body_length: 60
