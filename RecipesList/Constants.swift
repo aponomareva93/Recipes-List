@@ -19,6 +19,4 @@ struct Constants {
     SortTypes.dateSort,
     SortTypes.alphabeticallySort
   ]
-  
-  static let recipeDetailsCellHeight: CGFloat = 105.0
 }

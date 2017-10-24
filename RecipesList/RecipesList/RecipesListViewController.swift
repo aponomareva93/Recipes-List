@@ -87,10 +87,6 @@ extension RecipesListViewController: UITableViewDataSource, UITableViewDelegate 
     return UITableViewCell()
   }
   
-  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    return Constants.recipeDetailsCellHeight
-  }
-  
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     delegate?.recipesListViewControllerDidTapRecipe(recipesListViewController: self,
                                                     recipe: viewModel.recipe(row: indexPath.row))
