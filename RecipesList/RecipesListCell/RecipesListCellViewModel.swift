@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class RecipesListCellViewModel {
   private var recipe: Recipe?
@@ -19,24 +20,15 @@ class RecipesListCellViewModel {
     return recipe?.description
   }
   
-  init(with recipe: Recipe?) {
-    self.recipe = recipe
+  var imageURL: URL? {
+    guard let imagesURLs = recipe?.imagesURLs,
+      !imagesURLs.isEmpty else {
+        return nil
+    }
+    return imagesURLs[0]
   }
   
-  func getImageFromURL(updateUIHandler: @escaping (_ imageData: Data) -> Void) {
-    if let imagesURLs = recipe?.imagesURLs,
-      !imagesURLs.isEmpty {
-      DispatchQueue.global(qos: .userInitiated).async {
-        if let url = imagesURLs[0] {
-          let urlContents = try? Data(contentsOf: url)
-          
-          if let imageData = urlContents, url == url {
-            DispatchQueue.main.async {
-              updateUIHandler(imageData)
-            }
-          }
-        }
-      }
-    }
+  init(with recipe: Recipe?) {
+    self.recipe = recipe
   }
 }

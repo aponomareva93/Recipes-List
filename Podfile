@@ -5,6 +5,7 @@ target ‘RecipesList’ do
   use_frameworks!
   pod 'SwiftLint'
   pod 'Alamofire'
+  pod ‘Kingfisher’
 end
 
 post_install do |installer|

@@ -4,7 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -40,12 +40,8 @@
                             <constraint firstAttribute="width" constant="86" id="NDQ-Lj-xhB"/>
                         </constraints>
                     </imageView>
-                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="pXx-uQ-FcA">
-                        <rect key="frame" x="41" y="42" width="20" height="20"/>
-                    </activityIndicatorView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="pXx-uQ-FcA" firstAttribute="centerY" secondItem="LaQ-IK-Hxr" secondAttribute="centerY" id="B79-2h-TCp"/>
                     <constraint firstAttribute="bottomMargin" secondItem="VwX-aT-Lhh" secondAttribute="bottom" constant="-0.5" id="FtO-XS-HJm"/>
                     <constraint firstItem="VwX-aT-Lhh" firstAttribute="leading" secondItem="LaQ-IK-Hxr" secondAttribute="trailing" constant="8" id="GT7-kk-WRh"/>
                     <constraint firstItem="PgK-VY-IPI" firstAttribute="top" secondItem="LaQ-IK-Hxr" secondAttribute="top" id="Moc-O9-lUQ"/>
@@ -55,7 +51,6 @@
                     <constraint firstItem="PgK-VY-IPI" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-2" id="WS0-qi-Szb"/>
                     <constraint firstItem="VwX-aT-Lhh" firstAttribute="trailing" secondItem="PgK-VY-IPI" secondAttribute="trailing" id="XvS-jP-JuJ"/>
                     <constraint firstItem="PgK-VY-IPI" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="a5p-Ii-eFz"/>
-                    <constraint firstItem="pXx-uQ-FcA" firstAttribute="centerX" secondItem="LaQ-IK-Hxr" secondAttribute="centerX" id="dY3-ck-yl3"/>
                     <constraint firstItem="PgK-VY-IPI" firstAttribute="leading" secondItem="LaQ-IK-Hxr" secondAttribute="trailing" constant="8" id="gp9-wF-9dP"/>
                     <constraint firstItem="PgK-VY-IPI" firstAttribute="leading" secondItem="LaQ-IK-Hxr" secondAttribute="trailing" constant="8" symbolic="YES" id="hvl-fA-5Mu"/>
                     <constraint firstItem="VwX-aT-Lhh" firstAttribute="top" secondItem="PgK-VY-IPI" secondAttribute="bottom" constant="2" id="omU-Z0-fb8"/>
@@ -66,7 +61,6 @@
                 <outlet property="recipeDescriptionLabel" destination="VwX-aT-Lhh" id="AwI-3C-Hwy"/>
                 <outlet property="recipeNameLabel" destination="PgK-VY-IPI" id="OEc-TR-gSX"/>
                 <outlet property="recipePhotoImageView" destination="LaQ-IK-Hxr" id="1V7-uJ-ArB"/>
-                <outlet property="spinner" destination="pXx-uQ-FcA" id="qbT-fG-nrE"/>
             </connections>
             <point key="canvasLocation" x="61.5" y="21.5"/>
         </tableViewCell>
