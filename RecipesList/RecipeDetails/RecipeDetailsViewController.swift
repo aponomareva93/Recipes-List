@@ -47,7 +47,7 @@ class RecipeDetailsViewController: UIViewController {
     descriptionLabel?.numberOfLines = 0
     descriptionLabel?.lineBreakMode = .byWordWrapping
     if !viewModel.description.isEmpty {
-      descriptionLabel?.text = "Description: " + viewModel.description
+      descriptionLabel?.text = viewModel.description
     } else {
       descriptionLabel?.isHidden = true
     }

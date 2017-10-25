@@ -16,7 +16,10 @@ class RecipeDetailsViewModel {
   }
   
   var description: String {
-    return recipe?.description ?? String()
+    guard let description = recipe?.description else {
+      return String()
+    }
+    return "Description: " + description
   }
   
   var instructions: String {
