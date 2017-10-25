@@ -23,6 +23,9 @@ class RecipesListViewController: UIViewController {
   
   private var viewModel: RecipesListViewModel
   
+  private var isSearching: Bool
+  private let searchQueue = OperationQueue()
+  
   // MARK: Outlets
   @IBOutlet private weak var recipesListTableView: UITableView!
   @IBOutlet private weak var searchRecipesBar: UISearchBar!
@@ -31,6 +34,7 @@ class RecipesListViewController: UIViewController {
   // MARK: Initializers
   init(viewModel: RecipesListViewModel) {
     self.viewModel = viewModel
+    isSearching = false
     super.init(nibName: nil, bundle: nil)
   }
   
@@ -99,8 +103,26 @@ extension RecipesListViewController: UITableViewDataSource, UITableViewDelegate 
 // MARK: UISearchBarDelegate
 extension RecipesListViewController: UISearchBarDelegate {
   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-    viewModel.search(searchText: searchText)
-    self.recipesListTableView.reloadData()
+    if isSearching {
+      let delay = DispatchTime.now() + 1
+      searchQueue.cancelAllOperations()
+      isSearching = false
+      DispatchQueue.main.asyncAfter(deadline: delay) { [weak self] in
+        self?.searchQueue.addOperation {
+          self?.viewModel.search(searchText: searchText)
+          self?.recipesListTableView.reloadData()
+        }
+      }
+    } else {
+      isSearching = true
+      searchQueue.addOperation { [weak self] in
+        self?.viewModel.search(searchText: searchText)
+        DispatchQueue.main.async {
+          self?.recipesListTableView.reloadData()
+        }
+        self?.isSearching = false
+      }
+    }
   }
   
   func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
