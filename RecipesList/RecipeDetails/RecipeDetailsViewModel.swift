@@ -38,20 +38,12 @@ class RecipeDetailsViewModel {
     self.recipe = recipe
   }
   
-  func getImageFromURL(imageNumber: Int, updateUIHandler: @escaping (_ imageData: Data) -> Void) {
-    if let imagesURLs = recipe?.imagesURLs,
-      imagesURLs.indices.contains(imageNumber) {
-      DispatchQueue.global(qos: .userInitiated).async {
-        if let url = imagesURLs[imageNumber] {
-          let urlContents = try? Data(contentsOf: url)
-          if let imageData = urlContents, url == url {
-            DispatchQueue.main.async {
-              updateUIHandler(imageData)
-            }
-          }
-        }
-      }
+  func imageURL(imageNumber: Int) -> URL? {
+    guard let imagesURLs = recipe?.imagesURLs,
+      !imagesURLs.isEmpty else {
+        return nil
     }
+    return imagesURLs[imageNumber]
   }
 }
 

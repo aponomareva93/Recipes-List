@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Kingfisher
 
 class RecipesListCellViewModel {
   private var recipe: Recipe?

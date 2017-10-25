@@ -15,8 +15,11 @@ struct Constants {
     case dateSort = "By Date"
     case alphabeticallySort = "Alphabetically"
   }
+  
   static let sortTypesArray = [
     SortTypes.dateSort,
     SortTypes.alphabeticallySort
   ]
+  
+  static let placeholderImage = UIImage(named: "no-image.png")
 }

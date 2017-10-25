@@ -4,7 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,7 +17,6 @@
                 <outlet property="nameLabel" destination="4CN-yJ-5ta" id="iJ6-KW-JT6"/>
                 <outlet property="photoImageView" destination="ifp-sb-S1o" id="avI-PB-U6l"/>
                 <outlet property="photosPageControl" destination="EtR-Ei-A2g" id="Gpq-9c-Vn0"/>
-                <outlet property="spinner" destination="IEk-e0-spo" id="yhY-Ga-P1w"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -91,9 +90,6 @@
                                 <constraint firstAttribute="width" constant="189" id="j6U-zT-ao8"/>
                             </constraints>
                         </imageView>
-                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="IEk-e0-spo">
-                            <rect key="frame" x="177" y="195" width="20" height="20"/>
-                        </activityIndicatorView>
                     </subviews>
                     <constraints>
                         <constraint firstItem="ifp-sb-S1o" firstAttribute="centerX" secondItem="4CN-yJ-5ta" secondAttribute="centerX" id="6X8-HE-vIO"/>
@@ -101,10 +97,8 @@
                         <constraint firstItem="ifp-sb-S1o" firstAttribute="centerX" secondItem="ypk-JR-PrN" secondAttribute="centerX" id="G6p-Ls-zQO"/>
                         <constraint firstAttribute="trailing" secondItem="jcJ-ap-1RY" secondAttribute="trailing" constant="16" id="KIb-rF-NIK"/>
                         <constraint firstItem="4CN-yJ-5ta" firstAttribute="top" secondItem="ypk-JR-PrN" secondAttribute="top" constant="28" id="WXU-0q-75w"/>
-                        <constraint firstItem="IEk-e0-spo" firstAttribute="centerX" secondItem="4CN-yJ-5ta" secondAttribute="centerX" id="ZeW-VT-A8V"/>
                         <constraint firstItem="ifp-sb-S1o" firstAttribute="top" secondItem="4CN-yJ-5ta" secondAttribute="bottom" constant="19" id="ZiE-Rr-PB2"/>
                         <constraint firstItem="jcJ-ap-1RY" firstAttribute="leading" secondItem="ypk-JR-PrN" secondAttribute="leading" constant="16" id="fA9-Lg-kJ6"/>
-                        <constraint firstItem="IEk-e0-spo" firstAttribute="centerY" secondItem="ifp-sb-S1o" secondAttribute="centerY" id="n0z-6M-fOU"/>
                         <constraint firstItem="4CN-yJ-5ta" firstAttribute="leading" secondItem="ypk-JR-PrN" secondAttribute="leading" constant="16" id="nTA-Kb-E4n"/>
                         <constraint firstAttribute="bottom" secondItem="jcJ-ap-1RY" secondAttribute="bottom" constant="3.5" id="ntG-Vr-fdp"/>
                         <constraint firstItem="jcJ-ap-1RY" firstAttribute="top" secondItem="ifp-sb-S1o" secondAttribute="bottom" constant="15" id="sSO-fB-lIx"/>

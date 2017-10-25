@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class RecipesListCell: UITableViewCell {
   
@@ -24,6 +25,6 @@ class RecipesListCell: UITableViewCell {
     
     recipeDescriptionLabel?.text = viewModel.description
     
-    recipePhotoImageView.kf.setImage(with: viewModel.imageURL)
+    recipePhotoImageView.kf.setImage(with: viewModel.imageURL, placeholder: Constants.placeholderImage)
   }
 }

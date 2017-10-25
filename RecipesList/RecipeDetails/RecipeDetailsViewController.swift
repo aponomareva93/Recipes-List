@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 fileprivate extension Constants {
   static let maxDifficultyLevel = 5
@@ -23,7 +24,6 @@ class RecipeDetailsViewController: UIViewController {
   @IBOutlet private weak var descriptionLabel: UILabel!
   @IBOutlet private weak var instructionsTextView: UITextView!
   @IBOutlet private weak var difficultyLevelStackView: UIStackView!
-  @IBOutlet private weak var spinner: UIActivityIndicatorView!
   
   // MARK: Initializers
   init(viewModel: RecipeDetailsViewModel) {
@@ -105,19 +105,12 @@ class RecipeDetailsViewController: UIViewController {
   }
   
   func setImageView() {
-    viewModel.getImageFromURL(imageNumber: photosPageControl.currentPage,
-                              updateUIHandler: { [weak self] data in
-                                self?.photoImageView?.image = UIImage(data: data)
-    })
+    photoImageView.kf.setImage(with: viewModel.imageURL(imageNumber: photosPageControl.currentPage),
+                               placeholder: Constants.placeholderImage)
   }
   
   @objc private func pageControlTapHandler(sender: UIPageControl) {
-    spinner.startAnimating()
-    viewModel.getImageFromURL(imageNumber: photosPageControl.currentPage,
-                              updateUIHandler: { [weak self] data in
-                                self?.photoImageView?.image = UIImage(data: data)
-                                self?.spinner.stopAnimating()
-    })
+    setImageView()
   }
   
   @objc private func swipePhotos(swipeGesture: UISwipeGestureRecognizer) {
