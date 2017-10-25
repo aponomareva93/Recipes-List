@@ -16,6 +16,14 @@ class RecipesListViewModel {
   private var recipesStorage = [Recipe]()
   private var recipes = [Recipe]()
   
+  let sortTypesArray = [
+    Constants.SortTypes.dateSort,
+    Constants.SortTypes.alphabeticallySort
+  ]
+  var sortTypesCount: Int {
+    return sortTypesArray.count
+  }
+  
   func recipe(row: Int) -> Recipe {
       return recipes[row]
   }

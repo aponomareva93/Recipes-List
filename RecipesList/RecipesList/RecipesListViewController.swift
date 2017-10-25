@@ -55,9 +55,13 @@ class RecipesListViewController: UIViewController {
     recipesListTableView?.register(UINib.init(nibName: Constants.recipeCellNibName, bundle: nil),
                                    forCellReuseIdentifier: Constants.recipeCellIdentifier)
     self.viewModel.getRecipes(updateUIHandler: { [weak self] in
-      if !Constants.sortTypesArray.isEmpty {
-        self?.viewModel.sort(sortType: Constants.sortTypesArray[0])
-        self?.sortTypeTextField.text = Constants.sortTypesArray[0].rawValue
+      let isEmpty = self?.viewModel.sortTypesArray.isEmpty ?? true
+      if !isEmpty {
+        guard let currentSortType = self?.viewModel.sortTypesArray[0] else {
+          return
+        }
+        self?.viewModel.sort(sortType: currentSortType)
+        self?.sortTypeTextField.text = currentSortType.rawValue
       }
       
       self?.recipesListTableView.reloadData()
@@ -107,17 +111,17 @@ extension RecipesListViewController: UISearchBarDelegate {
 // MARK: UIPickerViewDelegate, UIPickerViewDataSource
 extension RecipesListViewController: UIPickerViewDelegate, UIPickerViewDataSource {
   func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-    return Constants.sortTypesArray.count
+    return viewModel.sortTypesCount
   }
   
   func pickerView(_ pickerView: UIPickerView,
                   titleForRow row: Int,
                   forComponent component: Int) -> String? {
-    return Constants.sortTypesArray[row].rawValue
+    return viewModel.sortTypesArray[row].rawValue
   }
   
   func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-    let sortType = Constants.sortTypesArray[row]
+    let sortType = viewModel.sortTypesArray[row]
     sortTypeTextField?.text = sortType.rawValue
     viewModel.sort(sortType: sortType)
     sortTypeTextField?.resignFirstResponder()
@@ -126,16 +130,5 @@ extension RecipesListViewController: UIPickerViewDelegate, UIPickerViewDataSourc
   
   func numberOfComponents(in pickerView: UIPickerView) -> Int {
     return 1
-  }
-}
-
-fileprivate extension UIViewController {
-  func showAlert(withTitle title: String, message: String, okButtonTapped: (() -> Void)? = nil) {
-    let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-    let okAction = UIAlertAction(title: "OK", style: .default) { _ in
-      okButtonTapped?()
-    }
-    alert.addAction(okAction)
-    present(alert, animated: true, completion: nil)
   }
 }
