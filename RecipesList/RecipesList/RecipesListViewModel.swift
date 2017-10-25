@@ -8,7 +8,7 @@
 
 import Foundation
 
-class RecipesListViewModel {    
+class RecipesListViewModel {  
   var recipesCount: Int {
     return recipes.count
   }
@@ -16,11 +16,8 @@ class RecipesListViewModel {
   private var recipesStorage = [Recipe]()
   private var recipes = [Recipe]()
   
-  func recipe(row: Int) -> Recipe? {
-    if recipes.indices.contains(row) {
+  func recipe(row: Int) -> Recipe {
       return recipes[row]
-    }
-    return nil
   }
   
   func getRecipes(updateUIHandler: @escaping () -> Void,

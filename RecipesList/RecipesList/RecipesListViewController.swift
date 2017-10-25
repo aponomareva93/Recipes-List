@@ -15,12 +15,11 @@ fileprivate extension Constants {
 }
 
 protocol RecipesListViewControllerDelegate: class {
-  func recipesListViewControllerDidTapRecipe(recipesListViewController: RecipesListViewController,
-                                             recipe: Recipe?)
+  func recipesListViewController(didSelectRecipe recipe: Recipe)
 }
 
 class RecipesListViewController: UIViewController {
-  weak var delegate: RecipesListViewControllerDelegate?
+  weak var coordinatorDelegate: RecipesListViewControllerDelegate?
   
   private var viewModel: RecipesListViewModel
   
@@ -88,8 +87,8 @@ extension RecipesListViewController: UITableViewDataSource, UITableViewDelegate 
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    delegate?.recipesListViewControllerDidTapRecipe(recipesListViewController: self,
-                                                    recipe: viewModel.recipe(row: indexPath.row))
+    coordinatorDelegate?.recipesListViewController(didSelectRecipe:
+      viewModel.recipe(row: indexPath.row))
   }
 }
 

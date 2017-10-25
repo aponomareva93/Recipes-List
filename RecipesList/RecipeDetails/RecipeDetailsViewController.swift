@@ -13,13 +13,7 @@ fileprivate extension Constants {
   static let difficultyLevelItem = "🍗"
 }
 
-protocol RecipeDetailsViewControllerDelegate: class {
-  func recipeDetailsViewControllerDidTapClose(_ recipeDetailsViewController: RecipeDetailsViewController?)
-}
-
 class RecipeDetailsViewController: UIViewController {
-  weak var delegate: RecipeDetailsViewControllerDelegate?
-  
   private var viewModel: RecipeDetailsViewModel
   
   // MARK: Outlets
@@ -31,18 +25,10 @@ class RecipeDetailsViewController: UIViewController {
   @IBOutlet private weak var difficultyLevelStackView: UIStackView!
   @IBOutlet private weak var spinner: UIActivityIndicatorView!
   
-  private lazy var cancelBarButtonItem: UIBarButtonItem = {
-    let cancelBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel,
-                                              target: self,
-                                              action: #selector(cancelButtonTapped))
-    return cancelBarButtonItem
-  }()
-  
   // MARK: Initializers
   init(viewModel: RecipeDetailsViewModel) {
     self.viewModel = viewModel
     super.init(nibName: nil, bundle: nil)
-    navigationItem.leftBarButtonItem = cancelBarButtonItem
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -123,11 +109,6 @@ class RecipeDetailsViewController: UIViewController {
                               updateUIHandler: { [weak self] data in
                                 self?.photoImageView?.image = UIImage(data: data)
     })
-  }
-  
-  // MARK: Actions
-  @objc private func cancelButtonTapped(sender: UIBarButtonItem) {
-    delegate?.recipeDetailsViewControllerDidTapClose(self)
   }
   
   @objc private func pageControlTapHandler(sender: UIPageControl) {

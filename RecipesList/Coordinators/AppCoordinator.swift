@@ -8,17 +8,21 @@
 
 import UIKit
 
-class AppCoordinator: RootViewCoordinator {
-  
-  var childCoordinators: [Coordinator] = []
-  
+class AppCoordinator: Coordinator {
   var rootViewController: UIViewController {
-    return self.navigationController
+    return navigationController
   }
   
-  private let window: UIWindow
+  private let navigationController: UINavigationController = UINavigationController()
   
-  private lazy var navigationController: UINavigationController = UINavigationController()
+  private lazy var cancelBarButtonItem: UIBarButtonItem = {
+    let cancelBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel,
+                                              target: self,
+                                              action: #selector(cancelButtonTapped))
+    return cancelBarButtonItem
+  }()
+  
+  private let window: UIWindow
   
   init(window: UIWindow) {
     self.window = window
@@ -28,34 +32,26 @@ class AppCoordinator: RootViewCoordinator {
   }
   
   func start() {
-    self.showContactsListViewController()
+    showRecipesListViewController()
   }
   
-  private func showContactsListViewController() {
-    let viewModel = RecipesListViewModel()
-    let recipesListViewController = RecipesListViewController(viewModel: viewModel)
-    recipesListViewController.delegate = self
-    self.navigationController.viewControllers = [recipesListViewController]
+  private func showRecipesListViewController() {
+    let recipesListViewModel = RecipesListViewModel()
+    let recipesListViewController = RecipesListViewController(viewModel: recipesListViewModel)
+    recipesListViewController.coordinatorDelegate = self
+    navigationController.viewControllers = [recipesListViewController]
   }
   
+  @objc private func cancelButtonTapped(sender: UIBarButtonItem) {
+    navigationController.popViewController(animated: true)
+  }
 }
 
 extension AppCoordinator: RecipesListViewControllerDelegate {
-  func recipesListViewControllerDidTapRecipe(recipesListViewController: RecipesListViewController,
-                                             recipe: Recipe?) {
-    let recipeDeatilsCoordinator = RecipeDetailsCoordinator()
-    recipeDeatilsCoordinator.delegate = self
-    recipeDeatilsCoordinator.start(with: recipe)
-    self.addChildCoordinator(recipeDeatilsCoordinator)
-    self.rootViewController.present(recipeDeatilsCoordinator.rootViewController,
-                                    animated: true,
-                                    completion: nil)
-  }
-}
-
-extension AppCoordinator: RecipeDetailsCoordinatorDelegate {
-  func recipeDetailsCoordinatorDidRequestCancel(recipeDetailsCoordinator: RecipeDetailsCoordinator) {
-    recipeDetailsCoordinator.rootViewController.dismiss(animated: true)
-    self.removeChildCoordinator(recipeDetailsCoordinator)
+  func recipesListViewController(didSelectRecipe recipe: Recipe) {
+    let recipeDetailsViewModel = RecipeDetailsViewModel(recipe: recipe)
+    let recipeDetailsViewController = RecipeDetailsViewController(viewModel: recipeDetailsViewModel)
+    navigationController.pushViewController(recipeDetailsViewController, animated: true)
+    navigationController.navigationItem.leftBarButtonItem = cancelBarButtonItem
   }
 }

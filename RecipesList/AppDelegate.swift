@@ -18,8 +18,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                    didFinishLaunchingWithOptions
     launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
     self.window = UIWindow(frame: UIScreen.main.bounds)
-    self.appCoordinator = AppCoordinator(window: self.window!)
+    self.appCoordinator = AppCoordinator(window: window!)
     self.appCoordinator.start()
+    window?.makeKeyAndVisible()
     
     return true
   }
