@@ -37,8 +37,8 @@ class AppCoordinator: Coordinator {
   
   private func showRecipesListViewController() {
     let recipesListViewModel = RecipesListViewModel()
+    recipesListViewModel.coordinatorDelegate = self
     let recipesListViewController = RecipesListViewController(viewModel: recipesListViewModel)
-    recipesListViewController.coordinatorDelegate = self
     navigationController.viewControllers = [recipesListViewController]
   }
   
@@ -47,7 +47,7 @@ class AppCoordinator: Coordinator {
   }
 }
 
-extension AppCoordinator: RecipesListViewControllerDelegate {
+extension AppCoordinator: RecipesListViewModelDelegate {
   func recipesListViewController(didSelectRecipe recipe: Recipe) {
     let recipeDetailsViewModel = RecipeDetailsViewModel(recipe: recipe)
     let recipeDetailsViewController = RecipeDetailsViewController(viewModel: recipeDetailsViewModel)

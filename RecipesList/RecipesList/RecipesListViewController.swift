@@ -14,12 +14,12 @@ fileprivate extension Constants {
   static let viewTitle = "Recipes"
 }
 
-protocol RecipesListViewControllerDelegate: class {
+/*protocol RecipesListViewControllerDelegate: class {
   func recipesListViewController(didSelectRecipe recipe: Recipe)
-}
+}*/
 
 class RecipesListViewController: UIViewController {
-  weak var coordinatorDelegate: RecipesListViewControllerDelegate?
+  //weak var coordinatorDelegate: RecipesListViewControllerDelegate?
   
   private var viewModel: RecipesListViewModel
   
@@ -88,15 +88,15 @@ extension RecipesListViewController: UITableViewDataSource, UITableViewDelegate 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     if let cell = tableView.dequeueReusableCell(withIdentifier:
       Constants.recipeCellIdentifier, for: indexPath) as? RecipesListCell {
-      cell.setup(viewModel: RecipesListCellViewModel(with: viewModel.recipe(row: indexPath.row)))
+      let cellModel = viewModel.getCellViewModel(forRow: indexPath.row)
+      cell.setup(viewModel: cellModel)
       return cell
     }
     return UITableViewCell()
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    coordinatorDelegate?.recipesListViewController(didSelectRecipe:
-      viewModel.recipe(row: indexPath.row))
+    viewModel.recipesListViewController(didSelectRecipeAt: indexPath.row)
   }
 }
 

@@ -8,7 +8,13 @@
 
 import Foundation
 
-class RecipesListViewModel {  
+protocol RecipesListViewModelDelegate: class {
+  func recipesListViewController(didSelectRecipe recipe: Recipe)
+}
+
+class RecipesListViewModel {
+  weak var coordinatorDelegate: RecipesListViewModelDelegate?
+  
   var recipesCount: Int {
     return recipes.count
   }
@@ -24,8 +30,13 @@ class RecipesListViewModel {
     return sortTypesArray.count
   }
   
-  func recipe(row: Int) -> Recipe {
-      return recipes[row]
+  func getCellViewModel(forRow row: Int) -> RecipesListCellViewModel {
+    let cellViewModel = RecipesListCellViewModel(with: recipes[row])
+    return cellViewModel
+  }
+  
+  func recipesListViewController(didSelectRecipeAt row: Int) {
+    coordinatorDelegate?.recipesListViewController(didSelectRecipe: recipes[row])
   }
   
   func getRecipes(updateUIHandler: @escaping () -> Void,
