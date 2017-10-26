@@ -7,11 +7,12 @@
 //
 
 import UIKit
-import Kingfisher
 
 fileprivate extension Constants {
   static let maxDifficultyLevel = 5
   static let difficultyLevelItem = "🍗"
+  
+  static let collectionViewCellIdentifier = "CollectionViewCell"
 }
 
 class RecipeDetailsViewController: UIViewController {
@@ -19,11 +20,11 @@ class RecipeDetailsViewController: UIViewController {
   
   // MARK: Outlets
   @IBOutlet private weak var nameLabel: UILabel!
-  @IBOutlet private weak var photoImageView: UIImageView!
   @IBOutlet private weak var photosPageControl: UIPageControl!
   @IBOutlet private weak var descriptionLabel: UILabel!
   @IBOutlet private weak var instructionsTextView: UITextView!
   @IBOutlet private weak var difficultyLevelStackView: UIStackView!
+  @IBOutlet private weak var photosCollectionView: UICollectionView!
   
   // MARK: Initializers
   init(viewModel: RecipeDetailsViewModel) {
@@ -56,36 +57,30 @@ class RecipeDetailsViewController: UIViewController {
     instructionsTextView?.text = viewModel.instructions
     instructionsTextView?.contentOffset = CGPoint.zero
     
-    setImageView()
+    photosCollectionView?.delegate = self
+    photosCollectionView?.dataSource = self
+    photosCollectionView?.register(UINib.init(nibName: "PhotosCollectionViewCell", bundle: nil),
+                                  forCellWithReuseIdentifier: Constants.collectionViewCellIdentifier)
+    if let layout = photosCollectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
+      layout.scrollDirection = .horizontal
+    }
+    photosCollectionView?.showsHorizontalScrollIndicator = false
+    photosCollectionView?.isPagingEnabled = true
+    
     setupPagesControl()
     setupDifficultyLevelControl()
   }
   
   private func setupPagesControl() {
-    if viewModel.imagesCount > 1 {
-      photosPageControl?.numberOfPages = viewModel.imagesCount
-      let pageControlWidth = photosPageControl.size(forNumberOfPages: viewModel.imagesCount).width
-      let mainViewWidth = view.frame.width
-      if pageControlWidth > mainViewWidth {
-        let scale = mainViewWidth / pageControlWidth
-        photosPageControl?.transform = CGAffineTransform(scaleX: scale, y: scale)
-      }
-      photosPageControl?.addTarget(self,
-                                   action: #selector(pageControlTapHandler(sender:)),
-                                   for: .touchUpInside)
-      
-      photoImageView?.isUserInteractionEnabled = true
-      let leftSwipe = UISwipeGestureRecognizer(target: self,
-                                               action: #selector(swipePhotos(swipeGesture:)))
-      leftSwipe.direction = .left
-      photoImageView?.addGestureRecognizer(leftSwipe)
-      
-      let rightSwipe = UISwipeGestureRecognizer(target: self,
-                                                action: #selector(swipePhotos(swipeGesture:)))
-      rightSwipe.direction = .right
-      photoImageView?.addGestureRecognizer(rightSwipe)
-    } else {
-      photosPageControl.isHidden = true
+    photosPageControl?.hidesForSinglePage = true
+    photosPageControl.isUserInteractionEnabled = false
+    photosPageControl?.numberOfPages = viewModel.imagesCount
+    
+    let pageControlWidth = photosPageControl.size(forNumberOfPages: viewModel.imagesCount).width
+    let mainViewWidth = view.frame.width
+    if pageControlWidth > mainViewWidth {
+      let scale = mainViewWidth / pageControlWidth
+      photosPageControl?.transform = CGAffineTransform(scaleX: scale, y: scale)
     }
   }
   
@@ -103,30 +98,40 @@ class RecipeDetailsViewController: UIViewController {
       difficultyLevelStackView?.isHidden = true
     }
   }
-  
-  func setImageView() {
-    photoImageView.kf.setImage(with: viewModel.imageURL(imageNumber: photosPageControl.currentPage),
-                               placeholder: Constants.placeholderImage)
+}
+
+// MARK: UICollectionViewDelegate, UICollectionViewDataSource
+extension RecipeDetailsViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return viewModel.imagesCount
   }
   
-  @objc private func pageControlTapHandler(sender: UIPageControl) {
-    setImageView()
-  }
-  
-  @objc private func swipePhotos(swipeGesture: UISwipeGestureRecognizer) {
-    switch swipeGesture.direction {
-    case .right:
-      if photosPageControl.currentPage > 0 {
-        photosPageControl.currentPage -= 1
-        setImageView()
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) ->
+    UICollectionViewCell {
+    if let cell = photosCollectionView?.dequeueReusableCell(withReuseIdentifier:
+      Constants.collectionViewCellIdentifier, for: indexPath) as? PhotosCollectionViewCell {
+      if let url = viewModel.imageURL(imageNumber: indexPath.row) {
+        cell.setup(imageURL: url)
       }
-    case .left:
-      if photosPageControl.currentPage < viewModel.imagesCount - 1 {
-        photosPageControl.currentPage += 1
-        setImageView()
-      }
-    default:
-      break
+      return cell
     }
+    return UICollectionViewCell()
+  }
+  
+  func collectionView(_ collectionView: UICollectionView,
+                      didEndDisplaying cell: UICollectionViewCell,
+                      forItemAt indexPath: IndexPath) {
+    if let visibleItem = collectionView.indexPathsForVisibleItems.first?.item {
+      photosPageControl?.currentPage = visibleItem
+    }
+  }
+}
+
+// MARK: UICollectionViewDelegateFlowLayout
+extension RecipeDetailsViewController: UICollectionViewDelegateFlowLayout {
+  func collectionView(_ collectionView: UICollectionView,
+                      layout collectionViewLayout: UICollectionViewLayout,
+                      sizeForItemAt indexPath: IndexPath) -> CGSize {
+    return collectionView.bounds.size
   }
 }
