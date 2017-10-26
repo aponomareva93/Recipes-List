@@ -38,10 +38,7 @@ class RecipeDetailsViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    /*nameLabel?.numberOfLines = 0
-    nameLabel?.lineBreakMode = .byWordWrapping
-    nameLabel?.textColor = Constants.recipeNameColor
-    nameLabel?.text = viewModel.name*/
+    title = viewModel.name
     
     descriptionLabel?.numberOfLines = 0
     descriptionLabel?.lineBreakMode = .byWordWrapping
@@ -51,11 +48,7 @@ class RecipeDetailsViewController: UIViewController {
       descriptionLabel?.isHidden = true
     }
     
-    //instructionsTextView?.isEditable = false
-    //instructionsTextView?.text = viewModel.instructions
-    //instructionsTextView?.contentOffset = CGPoint.zero
     instructionsTextLabel?.text = viewModel.instructions
-    //instructionsTextLabel?.sizeToFit()
     
     photosCollectionView?.delegate = self
     photosCollectionView?.dataSource = self
