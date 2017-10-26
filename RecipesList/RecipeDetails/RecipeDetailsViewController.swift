@@ -10,7 +10,7 @@ import UIKit
 
 fileprivate extension Constants {
   static let maxDifficultyLevel = 5
-  static let difficultyLevelItem = "🍗"
+  //static let difficultyLevelItem = "🍗"
   
   static let collectionViewCellIdentifier = "CollectionViewCell"
 }
@@ -67,8 +67,12 @@ class RecipeDetailsViewController: UIViewController {
     photosCollectionView?.showsHorizontalScrollIndicator = false
     photosCollectionView?.isPagingEnabled = true
     
+    let difficultyLevelControl = RatingControl()
+    difficultyLevelControl.setupControl(maxRating: Constants.maxDifficultyLevel,
+                                        currentRating: viewModel.difficulty)
+    difficultyLevelStackView.addArrangedSubview(difficultyLevelControl)
+    
     setupPagesControl()
-    setupDifficultyLevelControl()
   }
   
   private func setupPagesControl() {
@@ -81,21 +85,6 @@ class RecipeDetailsViewController: UIViewController {
     if pageControlWidth > mainViewWidth {
       let scale = mainViewWidth / pageControlWidth
       photosPageControl?.transform = CGAffineTransform(scaleX: scale, y: scale)
-    }
-  }
-  
-  func setupDifficultyLevelControl() {
-    if viewModel.difficulty > 0 {
-      for item in 0..<Constants.maxDifficultyLevel {
-        let label = UILabel()
-        label.text = Constants.difficultyLevelItem
-        if item >= viewModel.difficulty {
-          label.alpha = 0.25
-        }
-        difficultyLevelStackView?.addArrangedSubview(label)
-      }
-    } else {
-      difficultyLevelStackView?.isHidden = true
     }
   }
 }
