@@ -10,7 +10,6 @@ import UIKit
 
 fileprivate extension Constants {
   static let maxDifficultyLevel = 5
-  //static let difficultyLevelItem = "🍗"
   
   static let collectionViewCellIdentifier = "CollectionViewCell"
 }
@@ -19,12 +18,11 @@ class RecipeDetailsViewController: UIViewController {
   private var viewModel: RecipeDetailsViewModel
   
   // MARK: Outlets
-  @IBOutlet private weak var nameLabel: UILabel!
   @IBOutlet private weak var photosPageControl: UIPageControl!
   @IBOutlet private weak var descriptionLabel: UILabel!
-  @IBOutlet private weak var instructionsTextView: UITextView!
   @IBOutlet private weak var difficultyLevelStackView: UIStackView!
   @IBOutlet private weak var photosCollectionView: UICollectionView!
+  @IBOutlet private weak var instructionsTextLabel: UILabel!
   
   // MARK: Initializers
   init(viewModel: RecipeDetailsViewModel) {
@@ -40,10 +38,10 @@ class RecipeDetailsViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    nameLabel?.numberOfLines = 0
+    /*nameLabel?.numberOfLines = 0
     nameLabel?.lineBreakMode = .byWordWrapping
     nameLabel?.textColor = Constants.recipeNameColor
-    nameLabel?.text = viewModel.name
+    nameLabel?.text = viewModel.name*/
     
     descriptionLabel?.numberOfLines = 0
     descriptionLabel?.lineBreakMode = .byWordWrapping
@@ -53,9 +51,11 @@ class RecipeDetailsViewController: UIViewController {
       descriptionLabel?.isHidden = true
     }
     
-    instructionsTextView?.isEditable = false
-    instructionsTextView?.text = viewModel.instructions
-    instructionsTextView?.contentOffset = CGPoint.zero
+    //instructionsTextView?.isEditable = false
+    //instructionsTextView?.text = viewModel.instructions
+    //instructionsTextView?.contentOffset = CGPoint.zero
+    instructionsTextLabel?.text = viewModel.instructions
+    //instructionsTextLabel?.sizeToFit()
     
     photosCollectionView?.delegate = self
     photosCollectionView?.dataSource = self
@@ -73,6 +73,11 @@ class RecipeDetailsViewController: UIViewController {
     difficultyLevelStackView.addArrangedSubview(difficultyLevelControl)
     
     setupPagesControl()
+  }
+  
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+    
   }
   
   private func setupPagesControl() {
