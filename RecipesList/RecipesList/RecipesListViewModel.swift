@@ -63,7 +63,7 @@ class RecipesListViewModel {
   
   func search(searchText: String) {
     recipes = searchText.isEmpty ? recipesStorage : recipesStorage.filter { (item: Recipe) -> Bool in
-      return (item.name?.range(of: searchText,
+      return (item.name.range(of: searchText,
                                options: .caseInsensitive,
                                range: nil,
                                locale: nil) != nil
@@ -71,7 +71,7 @@ class RecipesListViewModel {
                                    options: .caseInsensitive,
                                    range: nil,
                                    locale: nil) != nil
-        || item.instructions?.range(of: searchText,
+        || item.instructions.range(of: searchText,
                                     options: .caseInsensitive,
                                     range: nil,
                                     locale: nil) != nil)

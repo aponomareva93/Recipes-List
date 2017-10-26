@@ -30,7 +30,7 @@ class RecipeDetailsViewModel {
   }
   
   var imagesCount: Int {
-    return recipe?.imagesURLs?.count ?? 0
+    return recipe?.imagesURLs.count ?? 0
   }
   
   var difficulty: Int {

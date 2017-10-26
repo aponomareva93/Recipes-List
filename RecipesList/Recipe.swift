@@ -16,40 +16,57 @@ fileprivate extension Constants {
 }
 
 struct Recipe: JSONMappable {
-  var name: String?
-  var imagesURLs: [URL?]?
-  var lastUpdated: Int?
-  var instructions: String?
+  let name: String
+  let imagesURLs: [URL?]
+  let lastUpdated: Int
+  let instructions: String
   var description: String?
-  var difficulty: Int?
+  let difficulty: Int
   
   init(fromJSON JSON: [String: Any]?) throws {
     if let name = JSON?["name"] as? String {
       self.name = name
     } else {
       print("Recipe::init:Cannot parse \"name\"-section")
+      let error = NSError(domain: Constants.invalidJSONDataError.domain,
+                          code: Constants.invalidJSONDataError.code,
+                          userInfo: Constants.invalidJSONDataError.userInfo)
+      throw error
     }
     
     if let imagesURLsNames = JSON?["images"] as? [String] {
-      self.imagesURLs = [URL?]()
+      var urls = [URL?]()
       for imageURLName in imagesURLsNames {
         let url = URL(string: imageURLName)
-        self.imagesURLs?.append(url)
+        urls.append(url)
       }
+      self.imagesURLs = urls
     } else {
       print("Recipe::init:Cannot parse \"images\"-section")
+      let error = NSError(domain: Constants.invalidJSONDataError.domain,
+                          code: Constants.invalidJSONDataError.code,
+                          userInfo: Constants.invalidJSONDataError.userInfo)
+      throw error
     }
     
     if let lastUpdated = JSON?["lastUpdated"] as? Int {
       self.lastUpdated = lastUpdated
     } else {
       print("Recipe::init:Cannot parse \"lastUpdated\"-section")
+      let error = NSError(domain: Constants.invalidJSONDataError.domain,
+                          code: Constants.invalidJSONDataError.code,
+                          userInfo: Constants.invalidJSONDataError.userInfo)
+      throw error
     }
     
     if let instructions = JSON?["instructions"] as? String {
       self.instructions = instructions
     } else {
       print("Recipe::init:Cannot parse \"instructions\"-section")
+      let error = NSError(domain: Constants.invalidJSONDataError.domain,
+                          code: Constants.invalidJSONDataError.code,
+                          userInfo: Constants.invalidJSONDataError.userInfo)
+      throw error
     }
     
     if let description = JSON?["description"] as? String {
@@ -62,17 +79,10 @@ struct Recipe: JSONMappable {
       self.difficulty = difficulty
     } else {
       print("Recipe::init:Cannot parse \"difficulty\"-section")
-    }
-    
-    guard name != nil,
-      imagesURLs != nil,
-      lastUpdated != nil,
-      instructions != nil,
-      difficulty != nil else {
-        let error = NSError(domain: Constants.invalidJSONDataError.domain,
-                            code: Constants.invalidJSONDataError.code,
-                            userInfo: Constants.invalidJSONDataError.userInfo)
-        throw error
+      let error = NSError(domain: Constants.invalidJSONDataError.domain,
+                          code: Constants.invalidJSONDataError.code,
+                          userInfo: Constants.invalidJSONDataError.userInfo)
+      throw error
     }
   }
 }
