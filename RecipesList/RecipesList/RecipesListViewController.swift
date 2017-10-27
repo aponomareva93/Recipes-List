@@ -14,27 +14,25 @@ fileprivate extension Constants {
   static let viewTitle = "Recipes"
 }
 
-/*protocol RecipesListViewControllerDelegate: class {
-  func recipesListViewController(didSelectRecipe recipe: Recipe)
-}*/
-
 class RecipesListViewController: UIViewController {
-  //weak var coordinatorDelegate: RecipesListViewControllerDelegate?
-  
   private var viewModel: RecipesListViewModel
   
   private var isSearching: Bool
   private let searchQueue = OperationQueue()
+  private var searchText: String?
   
   // MARK: Outlets
   @IBOutlet private weak var recipesListTableView: UITableView!
-  @IBOutlet private weak var searchRecipesBar: UISearchBar!
+  //@IBOutlet private weak var searchRecipesBar: UISearchBar!
   @IBOutlet private weak var sortTypeTextField: UITextField!
+  
+  private let searchController: UISearchController
   
   // MARK: Initializers
   init(viewModel: RecipesListViewModel) {
     self.viewModel = viewModel
     isSearching = false
+    searchController = UISearchController(searchResultsController: nil)
     super.init(nibName: nil, bundle: nil)
   }
   
@@ -45,15 +43,21 @@ class RecipesListViewController: UIViewController {
   // MARK: UI setup
   override func viewDidLoad() {
     super.viewDidLoad()
-    
     title = Constants.viewTitle
+    
+    searchController.searchResultsUpdater = self
+    searchController.searchBar.delegate = self
+    //searchController.searchBar.sizeToFit()
+    recipesListTableView.tableHeaderView = searchController.searchBar
+    searchController.searchBar.searchBarStyle = .minimal
     
     let sortTypePicker = UIPickerView()
     sortTypePicker.delegate = self
     sortTypePicker.dataSource = self
     sortTypeTextField?.inputView = sortTypePicker
     
-    searchRecipesBar?.delegate = self
+    //searchRecipesBar?.delegate = self
+    
     recipesListTableView?.delegate = self
     recipesListTableView?.dataSource = self
     recipesListTableView?.register(UINib.init(nibName: Constants.recipeCellNibName, bundle: nil),
@@ -72,6 +76,12 @@ class RecipesListViewController: UIViewController {
       }, errorHandler: { [weak self] error in
         self?.showAlert(withTitle: "Error", message: error.localizedDescription)
     })
+  }
+}
+
+extension RecipesListViewController: UISearchResultsUpdating, UISearchControllerDelegate {
+  func updateSearchResults(for searchController: UISearchController) {
+    
   }
 }
 
@@ -104,6 +114,7 @@ extension RecipesListViewController: UITableViewDataSource, UITableViewDelegate 
 // MARK: UISearchBarDelegate
 extension RecipesListViewController: UISearchBarDelegate {
   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    self.searchText = searchText
     if isSearching {
       let delay = DispatchTime.now() + 1
       searchQueue.cancelAllOperations()
@@ -127,7 +138,8 @@ extension RecipesListViewController: UISearchBarDelegate {
   }
   
   func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-    searchBar.resignFirstResponder()
+    searchController.isActive = false
+    searchBar.text = searchText
   }
 }
 

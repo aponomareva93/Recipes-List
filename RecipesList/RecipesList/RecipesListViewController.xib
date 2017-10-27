@@ -4,7 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -12,7 +12,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RecipesListViewController" customModule="RecipesList" customModuleProvider="target">
             <connections>
                 <outlet property="recipesListTableView" destination="Adh-v6-ulM" id="G1a-Xn-zuT"/>
-                <outlet property="searchRecipesBar" destination="krH-Ds-OSa" id="nv9-MT-o1U"/>
                 <outlet property="sortTypeTextField" destination="HOh-la-qnH" id="s86-Yh-wqU"/>
                 <outlet property="view" destination="CPn-P0-bRR" id="39X-AP-VTZ"/>
             </connections>
@@ -23,7 +22,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Adh-v6-ulM">
-                    <rect key="frame" x="0.0" y="106" width="375" height="561"/>
+                    <rect key="frame" x="0.0" y="50" width="375" height="617"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YWM-wX-YNn">
@@ -43,23 +42,12 @@
                         </textField>
                     </subviews>
                 </stackView>
-                <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="krH-Ds-OSa">
-                    <rect key="frame" x="0.0" y="50" width="375" height="56"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="56" id="4j4-wE-kFH"/>
-                    </constraints>
-                    <textInputTraits key="textInputTraits"/>
-                </searchBar>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="krH-Ds-OSa" firstAttribute="top" secondItem="Sis-7C-sGK" secondAttribute="top" constant="30" id="4Ww-2L-wJx"/>
-                <constraint firstItem="krH-Ds-OSa" firstAttribute="top" secondItem="YWM-wX-YNn" secondAttribute="bottom" id="9eI-4D-Vwq"/>
-                <constraint firstItem="krH-Ds-OSa" firstAttribute="trailing" secondItem="Sis-7C-sGK" secondAttribute="trailing" id="Geu-E4-NPu"/>
-                <constraint firstItem="krH-Ds-OSa" firstAttribute="leading" secondItem="Sis-7C-sGK" secondAttribute="leading" id="IgV-cj-dGU"/>
                 <constraint firstItem="YWM-wX-YNn" firstAttribute="top" secondItem="Sis-7C-sGK" secondAttribute="top" id="Kc5-Od-BJs"/>
                 <constraint firstItem="YWM-wX-YNn" firstAttribute="leading" secondItem="Sis-7C-sGK" secondAttribute="leading" id="enR-8E-vav"/>
-                <constraint firstItem="Adh-v6-ulM" firstAttribute="top" secondItem="krH-Ds-OSa" secondAttribute="bottom" id="gUg-Sx-4QE"/>
+                <constraint firstItem="Adh-v6-ulM" firstAttribute="top" secondItem="YWM-wX-YNn" secondAttribute="bottom" id="pl9-nU-TC3"/>
                 <constraint firstItem="Sis-7C-sGK" firstAttribute="trailing" secondItem="YWM-wX-YNn" secondAttribute="trailing" id="pvv-ag-v2m"/>
                 <constraint firstItem="Adh-v6-ulM" firstAttribute="leading" secondItem="Sis-7C-sGK" secondAttribute="leading" id="rAe-Rc-a2V"/>
                 <constraint firstItem="Adh-v6-ulM" firstAttribute="bottom" secondItem="Sis-7C-sGK" secondAttribute="bottom" id="xhY-4N-uhq"/>
