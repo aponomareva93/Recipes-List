@@ -23,10 +23,8 @@ class RecipesListViewController: UIViewController {
   
   // MARK: Outlets
   @IBOutlet private weak var recipesListTableView: UITableView!
-  //@IBOutlet private weak var searchRecipesBar: UISearchBar!
-  @IBOutlet private weak var sortTypeTextField: UITextField!
-  
   private let searchController: UISearchController
+  private var sortControl: UISegmentedControl?
   
   // MARK: Initializers
   init(viewModel: RecipesListViewModel) {
@@ -45,18 +43,11 @@ class RecipesListViewController: UIViewController {
     super.viewDidLoad()
     title = Constants.viewTitle
     
-    searchController.searchResultsUpdater = self
     searchController.searchBar.delegate = self
-    //searchController.searchBar.sizeToFit()
-    recipesListTableView.tableHeaderView = searchController.searchBar
     searchController.searchBar.searchBarStyle = .minimal
+    recipesListTableView.tableHeaderView = searchController.searchBar
     
-    let sortTypePicker = UIPickerView()
-    sortTypePicker.delegate = self
-    sortTypePicker.dataSource = self
-    sortTypeTextField?.inputView = sortTypePicker
-    
-    //searchRecipesBar?.delegate = self
+    sortControl = createSortControl()
     
     recipesListTableView?.delegate = self
     recipesListTableView?.dataSource = self
@@ -69,7 +60,6 @@ class RecipesListViewController: UIViewController {
           return
         }
         self?.viewModel.sort(sortType: currentSortType)
-        self?.sortTypeTextField.text = currentSortType.rawValue
       }
       
       self?.recipesListTableView.reloadData()
@@ -77,11 +67,26 @@ class RecipesListViewController: UIViewController {
         self?.showAlert(withTitle: "Error", message: error.localizedDescription)
     })
   }
-}
-
-extension RecipesListViewController: UISearchResultsUpdating, UISearchControllerDelegate {
-  func updateSearchResults(for searchController: UISearchController) {
+  
+  func createSortControl() -> UISegmentedControl? {
+    if viewModel.sortTypesArray.isEmpty {
+      return nil
+    }
     
+    let button = UISegmentedControl()
+    for sort in viewModel.sortTypesArray {
+      button.insertSegment(withTitle: sort.rawValue, at: button.numberOfSegments, animated: true)
+    }
+    
+    button.selectedSegmentIndex = 0
+    button.addTarget(self, action: #selector(performSort(sender:)), for: .valueChanged)
+    button.apportionsSegmentWidthsByContent = true
+    return button
+  }
+  
+  @objc func performSort(sender: UISegmentedControl) {
+    viewModel.sort(sortType: viewModel.sortTypesArray[sender.selectedSegmentIndex])
+    recipesListTableView.reloadData()
   }
 }
 
@@ -108,6 +113,10 @@ extension RecipesListViewController: UITableViewDataSource, UITableViewDelegate 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     viewModel.recipesListViewController(didSelectRecipeAt: indexPath.row)
     tableView.deselectRow(at: indexPath, animated: true)
+  }
+  
+  func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    return sortControl
   }
 }
 
@@ -144,7 +153,7 @@ extension RecipesListViewController: UISearchBarDelegate {
 }
 
 // MARK: UIPickerViewDelegate, UIPickerViewDataSource
-extension RecipesListViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+/*extension RecipesListViewController: UIPickerViewDelegate, UIPickerViewDataSource {
   func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
     return viewModel.sortTypesCount
   }
@@ -166,4 +175,4 @@ extension RecipesListViewController: UIPickerViewDelegate, UIPickerViewDataSourc
   func numberOfComponents(in pickerView: UIPickerView) -> Int {
     return 1
   }
-}
+}*/
