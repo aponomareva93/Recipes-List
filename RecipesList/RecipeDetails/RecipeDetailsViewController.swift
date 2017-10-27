@@ -38,8 +38,6 @@ class RecipeDetailsViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    title = viewModel.name
-    
     descriptionLabel?.numberOfLines = 0
     descriptionLabel?.lineBreakMode = .byWordWrapping
     if !viewModel.description.isEmpty {
