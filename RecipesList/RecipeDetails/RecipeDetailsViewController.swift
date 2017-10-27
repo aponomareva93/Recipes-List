@@ -68,11 +68,6 @@ class RecipeDetailsViewController: UIViewController {
     setupPagesControl()
   }
   
-  override func viewDidLayoutSubviews() {
-    super.viewDidLayoutSubviews()
-    
-  }
-  
   private func setupPagesControl() {
     photosPageControl?.hidesForSinglePage = true
     photosPageControl.isUserInteractionEnabled = false

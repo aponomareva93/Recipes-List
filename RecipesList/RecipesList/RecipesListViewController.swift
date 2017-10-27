@@ -90,7 +90,7 @@ class RecipesListViewController: UIViewController {
   }
 }
 
-// MARK: UITableViewDelegate, UITableViewDelegate
+// MARK: UITableViewDelegate, UITableViewDataSource
 extension RecipesListViewController: UITableViewDataSource, UITableViewDelegate {
   func numberOfSections(in tableView: UITableView) -> Int {
     return 1
@@ -151,28 +151,3 @@ extension RecipesListViewController: UISearchBarDelegate {
     searchBar.text = searchText
   }
 }
-
-// MARK: UIPickerViewDelegate, UIPickerViewDataSource
-/*extension RecipesListViewController: UIPickerViewDelegate, UIPickerViewDataSource {
-  func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-    return viewModel.sortTypesCount
-  }
-  
-  func pickerView(_ pickerView: UIPickerView,
-                  titleForRow row: Int,
-                  forComponent component: Int) -> String? {
-    return viewModel.sortTypesArray[row].rawValue
-  }
-  
-  func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-    let sortType = viewModel.sortTypesArray[row]
-    sortTypeTextField?.text = sortType.rawValue
-    viewModel.sort(sortType: sortType)
-    sortTypeTextField?.resignFirstResponder()
-    recipesListTableView.reloadData()
-  }
-  
-  func numberOfComponents(in pickerView: UIPickerView) -> Int {
-    return 1
-  }
-}*/
