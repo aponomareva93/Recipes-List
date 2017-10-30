@@ -22,6 +22,13 @@ class AppCoordinator: Coordinator {
     return cancelBarButtonItem
   }()
   
+  private lazy var titleLabel: UILabel = {
+    let titleLabel = UILabel()
+    titleLabel.textAlignment = .center
+    titleLabel.numberOfLines = 0
+    return titleLabel
+  }()
+  
   private let window: UIWindow
   
   init(window: UIWindow) {
@@ -52,12 +59,9 @@ extension AppCoordinator: RecipesListViewModelDelegate {
     let recipeDetailsViewModel = RecipeDetailsViewModel(recipe: recipe)
     let recipeDetailsViewController = RecipeDetailsViewController(viewModel: recipeDetailsViewModel)
     navigationController.pushViewController(recipeDetailsViewController, animated: true)
-    navigationController.navigationItem.leftBarButtonItem = cancelBarButtonItem
     
-    let titleLabel = UILabel()
     titleLabel.text = recipeDetailsViewModel.name
-    titleLabel.textAlignment = .center
-    titleLabel.numberOfLines = 0
     recipeDetailsViewController.navigationItem.titleView = titleLabel
+    navigationController.navigationItem.leftBarButtonItem = cancelBarButtonItem
   }
 }
