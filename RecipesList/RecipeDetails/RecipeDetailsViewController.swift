@@ -57,7 +57,7 @@ class RecipeDetailsViewController: UIViewController {
     }
     photosCollectionView?.showsHorizontalScrollIndicator = false
     photosCollectionView?.isPagingEnabled = true
-    
+        
     let difficultyLevelControl = RatingControl()
     difficultyLevelControl.setupControl(maxRating: Constants.maxDifficultyLevel,
                                         currentRating: viewModel.difficulty)
