@@ -18,11 +18,11 @@ fileprivate extension Constants {
                                          userInfo: [NSLocalizedDescriptionKey:
                                           "Cannot create JSON from response"])
   static let recipesAPIUrl = "https://test.space-o.ru/recipes.json"
-  static let RecipesJSONArrayName = "recipes"
+  static let recipesJSONArrayName = "recipes"
 }
 
 protocol JSONMappable {
-  init(fromJSON JSON: [String: Any]?) throws
+  init(fromJSON json: [String: Any]?) throws
 }
 
 enum Response<T: JSONMappable> {
@@ -51,17 +51,17 @@ class NetworkManager {
         switch response.result {
         case .success(let value):
           if let dictionary = value as? [String: [[String: Any]]],
-            let JSONArray = dictionary[Constants.RecipesJSONArrayName] {
-            var JSONElementsArray = [T]()
-            for JSONElement in JSONArray {
+            let jsonArray = dictionary[Constants.recipesJSONArrayName] {
+            var jsonElementsArray = [T]()
+            for jsonElement in jsonArray {
               do {
-                let object = try T(fromJSON: JSONElement)
-                JSONElementsArray.append(object)
+                let object = try T(fromJSON: jsonElement)
+                jsonElementsArray.append(object)
               } catch {
                 completion(.failure(error as NSError))
               }
             }
-            completion(.success(JSONElementsArray))
+            completion(.success(jsonElementsArray))
           } else {
             print("NetworkManager::Cannot create JSON from response")
             let error = NSError(domain: Constants.invalidJSONResponseError.domain,

@@ -70,13 +70,6 @@ class RecipeDetailsViewController: UIViewController {
     photosPageControl?.hidesForSinglePage = true
     photosPageControl.isUserInteractionEnabled = false
     photosPageControl?.numberOfPages = viewModel.imagesCount
-    
-    let pageControlWidth = photosPageControl.size(forNumberOfPages: viewModel.imagesCount).width
-    let mainViewWidth = view.frame.width
-    if pageControlWidth > mainViewWidth {
-      let scale = mainViewWidth / pageControlWidth
-      photosPageControl?.transform = CGAffineTransform(scaleX: scale, y: scale)
-    }
   }
 }
 

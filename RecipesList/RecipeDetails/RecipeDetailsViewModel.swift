@@ -8,6 +8,19 @@
 
 import Foundation
 
+fileprivate extension String {
+  func replaceBrByNewLine() -> String {
+    return self.replacingOccurrences(of: "<br>",
+                                     with: "\n",
+                                     options: .regularExpression,
+                                     range: nil)
+  }
+}
+
+fileprivate extension Constants {
+  static let maxPhotosNumber = 15
+}
+
 class RecipeDetailsViewModel {
   private let recipe: Recipe?
   
@@ -17,6 +30,9 @@ class RecipeDetailsViewModel {
   
   var description: String {
     guard let description = recipe?.description else {
+      return String()
+    }
+    if description.isEmpty {
       return String()
     }
     return "Description: " + description
@@ -30,7 +46,13 @@ class RecipeDetailsViewModel {
   }
   
   var imagesCount: Int {
-    return recipe?.imagesURLs.count ?? 0
+    guard let count = recipe?.imagesURLs.count else {
+      return 0
+    }
+    if count > Constants.maxPhotosNumber {
+      return Constants.maxPhotosNumber
+    }
+    return count
   }
   
   var difficulty: Int {
@@ -47,14 +69,5 @@ class RecipeDetailsViewModel {
         return nil
     }
     return imagesURLs[imageNumber]
-  }
-}
-
-fileprivate extension String {
-  func replaceBrByNewLine() -> String {
-    return self.replacingOccurrences(of: "<br>",
-                                     with: "\n",
-                                     options: .regularExpression,
-                                     range: nil)
   }
 }

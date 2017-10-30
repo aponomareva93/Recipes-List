@@ -23,12 +23,12 @@ struct Recipe: JSONMappable {
   var description: String?
   let difficulty: Int
   
-  init(fromJSON JSON: [String: Any]?) throws {
-    guard let name = JSON?["name"] as? String,
-    let imagesURLsNames = JSON?["images"] as? [String],
-    let lastUpdated = JSON?["lastUpdated"] as? Int,
-    let instructions = JSON?["instructions"] as? String,
-    let difficulty = JSON?["difficulty"] as? Int else {
+  init(fromJSON json: [String: Any]?) throws {
+    guard let name = json?["name"] as? String,
+    let imagesURLsNames = json?["images"] as? [String],
+    let lastUpdated = json?["lastUpdated"] as? Int,
+    let instructions = json?["instructions"] as? String,
+    let difficulty = json?["difficulty"] as? Int else {
       let error = NSError(domain: Constants.invalidJSONDataError.domain,
                           code: Constants.invalidJSONDataError.code,
                           userInfo: Constants.invalidJSONDataError.userInfo)
@@ -47,6 +47,6 @@ struct Recipe: JSONMappable {
     }
     imagesURLs = urls
     
-    self.description = JSON?["description"] as? String
+    self.description = json?["description"] as? String
   }
 }
