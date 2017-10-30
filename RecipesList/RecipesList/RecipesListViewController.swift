@@ -76,6 +76,7 @@ class RecipesListViewController: UIViewController {
     }
     
     let segmentedSortControl = UISegmentedControl()
+    
     for sort in viewModel.sortTypesArray {
       segmentedSortControl.insertSegment(withTitle: sort.rawValue,
                                          at: segmentedSortControl.numberOfSegments,
@@ -84,8 +85,8 @@ class RecipesListViewController: UIViewController {
     
     segmentedSortControl.selectedSegmentIndex = 0
     segmentedSortControl.backgroundColor = .white
-    segmentedSortControl.addTarget(self, action: #selector(performSort(sender:)), for: .valueChanged)
     segmentedSortControl.apportionsSegmentWidthsByContent = true
+    segmentedSortControl.addTarget(self, action: #selector(performSort(sender:)), for: .valueChanged)
     return segmentedSortControl
   }
   

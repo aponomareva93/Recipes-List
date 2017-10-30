@@ -9,6 +9,10 @@
 import UIKit
 import Kingfisher
 
+fileprivate extension Constants {  
+  static let recipeNameColor = UIColor.brown
+}
+
 class RecipesListCell: UITableViewCell {
   
   // MARK: Outlets

@@ -8,9 +8,7 @@
 
 import UIKit
 
-struct Constants {
-  static let recipeNameColor = UIColor.brown
-  
+struct Constants {  
   enum SortTypes: String {
     case dateSort = "By Date"
     case alphabeticallySort = "Alphabetically"

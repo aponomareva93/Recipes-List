@@ -22,12 +22,30 @@ fileprivate extension Constants {
 }
 
 protocol JSONMappable {
-  init(fromJSON json: [String: Any]?) throws
+  init(fromJSON json: JSON?) throws
 }
 
 enum Response<T: JSONMappable> {
-  case success([T])
+  case success(T)
   case failure(NSError)
+}
+
+struct RecipesResponse: JSONMappable {
+  var recipes = [Recipe]()
+  
+  init(fromJSON json: JSON?) throws {
+    if let dictionary = json as? [String: [JSON]],
+      let jsonArray = dictionary[Constants.recipesJSONArrayName] {
+      for jsonElement in jsonArray {
+        do {
+          let recipe = try Recipe(fromJSON: jsonElement)
+          recipes.append(recipe)
+        } catch {
+          throw error
+        }
+      }
+    }
+  }
 }
 
 class NetworkManager {
@@ -50,18 +68,13 @@ class NetworkManager {
       .responseJSON(completionHandler: {response in
         switch response.result {
         case .success(let value):
-          if let dictionary = value as? [String: [[String: Any]]],
-            let jsonArray = dictionary[Constants.recipesJSONArrayName] {
-            var jsonElementsArray = [T]()
-            for jsonElement in jsonArray {
-              do {
-                let object = try T(fromJSON: jsonElement)
-                jsonElementsArray.append(object)
-              } catch {
-                completion(.failure(error as NSError))
-              }
+          if let value = value as? JSON {
+          do {
+            let object = try T(fromJSON: value)
+            completion(.success(object))
+          } catch {
+            completion(.failure(error as NSError))
             }
-            completion(.success(jsonElementsArray))
           } else {
             print("NetworkManager::Cannot create JSON from response")
             let error = NSError(domain: Constants.invalidJSONResponseError.domain,
@@ -75,7 +88,7 @@ class NetworkManager {
       })
   }
   
-  class func fetchRecipes<T>(completionHandler: @escaping (Response<T>) -> Void) {
+  class func fetchRecipes(completionHandler: @escaping (Response<RecipesResponse>) -> Void) {
     let url = URL(string: Constants.recipesAPIUrl)
     if let url = url {
       baseRequest(url: url, method: .get, completion: completionHandler)

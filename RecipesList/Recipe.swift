@@ -23,7 +23,7 @@ struct Recipe: JSONMappable {
   var description: String?
   let difficulty: Int
   
-  init(fromJSON json: [String: Any]?) throws {
+  init(fromJSON json: JSON?) throws {
     guard let name = json?["name"] as? String,
     let imagesURLsNames = json?["images"] as? [String],
     let lastUpdated = json?["lastUpdated"] as? Int,

@@ -26,6 +26,7 @@
 		955F574B1F84B38C00ABE75F /* RecipesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 955F574A1F84B38C00ABE75F /* RecipesListViewController.swift */; };
 		955F57501F84B38C00ABE75F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 955F574F1F84B38C00ABE75F /* Assets.xcassets */; };
 		9561FD641FA1A2D300849625 /* RatingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9561FD631FA1A2D300849625 /* RatingControl.swift */; };
+		9581BD2C1FA71D4100A13E07 /* Typealiases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9581BD2B1FA71D4100A13E07 /* Typealiases.swift */; };
 		958CAEEB1FA05C080002A5EB /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 958CAEEA1FA05C080002A5EB /* Extensions.swift */; };
 		958CAEED1FA0ADFF0002A5EB /* PhotosCollectionVewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 958CAEEC1FA0ADFF0002A5EB /* PhotosCollectionVewCell.swift */; };
 		958CAEEF1FA0B2030002A5EB /* PhotosCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 958CAEEE1FA0B2030002A5EB /* PhotosCollectionViewCell.xib */; };
@@ -56,6 +57,7 @@
 		955F574F1F84B38C00ABE75F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		955F57541F84B38C00ABE75F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9561FD631FA1A2D300849625 /* RatingControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingControl.swift; sourceTree = "<group>"; };
+		9581BD2B1FA71D4100A13E07 /* Typealiases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typealiases.swift; sourceTree = "<group>"; };
 		958CAEEA1FA05C080002A5EB /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		958CAEEC1FA0ADFF0002A5EB /* PhotosCollectionVewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionVewCell.swift; sourceTree = "<group>"; };
 		958CAEEE1FA0B2030002A5EB /* PhotosCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhotosCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 				9547A1341F84B57F00E707C8 /* RecipeDetails */,
 				9547A12F1F84B54900E707C8 /* RecipesList */,
 				9547A1451F84D0F000E707C8 /* Recipe.swift */,
+				9581BD2B1FA71D4100A13E07 /* Typealiases.swift */,
 				9547A1471F84D35A00E707C8 /* NetworkManager.swift */,
 				9547A1491F84D6F400E707C8 /* Constants.swift */,
 				958CAEEA1FA05C080002A5EB /* Extensions.swift */,
@@ -340,6 +343,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9581BD2C1FA71D4100A13E07 /* Typealiases.swift in Sources */,
 				9547A1361F84B5E400E707C8 /* Coordinator.swift in Sources */,
 				9547A1421F84CFCC00E707C8 /* RecipeDetailsViewModel.swift in Sources */,
 				9547A14D1F84F7EE00E707C8 /* RecipesListCell.swift in Sources */,
