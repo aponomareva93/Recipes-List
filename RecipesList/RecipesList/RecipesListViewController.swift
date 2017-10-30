@@ -19,7 +19,6 @@ class RecipesListViewController: UIViewController {
   
   private var isSearching: Bool
   private let searchQueue = OperationQueue()
-  private var searchText: String?
   
   // MARK: Outlets
   @IBOutlet private weak var recipesListTableView: UITableView!
@@ -43,12 +42,15 @@ class RecipesListViewController: UIViewController {
     super.viewDidLoad()
     title = Constants.viewTitle
     
-    searchController.searchBar.delegate = self
     searchController.searchBar.searchBarStyle = .minimal
-    recipesListTableView.tableHeaderView = searchController.searchBar
+    searchController.dimsBackgroundDuringPresentation = false
+    searchController.searchResultsUpdater = self
+    definesPresentationContext = true
+    searchController.searchBar.sizeToFit()
     
     sortControl = createSortControl()
     
+    recipesListTableView?.tableHeaderView = searchController.searchBar
     recipesListTableView?.delegate = self
     recipesListTableView?.dataSource = self
     recipesListTableView?.register(UINib.init(nibName: Constants.recipeCellNibName, bundle: nil),
@@ -73,15 +75,16 @@ class RecipesListViewController: UIViewController {
       return nil
     }
     
-    let button = UISegmentedControl()
+    let segmentedSortControl = UISegmentedControl()
     for sort in viewModel.sortTypesArray {
-      button.insertSegment(withTitle: sort.rawValue, at: button.numberOfSegments, animated: true)
+      segmentedSortControl.insertSegment(withTitle: sort.rawValue, at: segmentedSortControl.numberOfSegments, animated: true)
     }
     
-    button.selectedSegmentIndex = 0
-    button.addTarget(self, action: #selector(performSort(sender:)), for: .valueChanged)
-    button.apportionsSegmentWidthsByContent = true
-    return button
+    segmentedSortControl.selectedSegmentIndex = 0
+    segmentedSortControl.backgroundColor = .white
+    segmentedSortControl.addTarget(self, action: #selector(performSort(sender:)), for: .valueChanged)
+    segmentedSortControl.apportionsSegmentWidthsByContent = true
+    return segmentedSortControl
   }
   
   @objc func performSort(sender: UISegmentedControl) {
@@ -120,34 +123,33 @@ extension RecipesListViewController: UITableViewDataSource, UITableViewDelegate 
   }
 }
 
-// MARK: UISearchBarDelegate
-extension RecipesListViewController: UISearchBarDelegate {
-  func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-    self.searchText = searchText
+// MARK: UISearchResultsUpdating
+extension RecipesListViewController: UISearchResultsUpdating {
+  func updateSearchResults(for searchController: UISearchController) {
     if isSearching {
       let delay = DispatchTime.now() + 1
       searchQueue.cancelAllOperations()
       isSearching = false
-      DispatchQueue.main.asyncAfter(deadline: delay) { [weak self] in
-        self?.searchQueue.addOperation {
-          self?.viewModel.search(searchText: searchText)
-          self?.recipesListTableView.reloadData()
+      
+      if let searchText = searchController.searchBar.text {
+        DispatchQueue.main.asyncAfter(deadline: delay) { [weak self] in
+          self?.searchQueue.addOperation {
+            self?.viewModel.search(searchText: searchText)
+            self?.recipesListTableView.reloadData()
+          }
         }
       }
     } else {
       isSearching = true
-      searchQueue.addOperation { [weak self] in
-        self?.viewModel.search(searchText: searchText)
-        DispatchQueue.main.async {
-          self?.recipesListTableView.reloadData()
+      if let searchText = searchController.searchBar.text {
+        searchQueue.addOperation { [weak self] in
+          self?.viewModel.search(searchText: searchText)
+          DispatchQueue.main.async {
+            self?.recipesListTableView.reloadData()
+          }
+          self?.isSearching = false
         }
-        self?.isSearching = false
       }
     }
-  }
-  
-  func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-    searchController.isActive = false
-    searchBar.text = searchText
   }
 }
