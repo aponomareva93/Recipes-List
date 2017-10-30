@@ -77,7 +77,9 @@ class RecipesListViewController: UIViewController {
     
     let segmentedSortControl = UISegmentedControl()
     for sort in viewModel.sortTypesArray {
-      segmentedSortControl.insertSegment(withTitle: sort.rawValue, at: segmentedSortControl.numberOfSegments, animated: true)
+      segmentedSortControl.insertSegment(withTitle: sort.rawValue,
+                                         at: segmentedSortControl.numberOfSegments,
+                                         animated: true)
     }
     
     segmentedSortControl.selectedSegmentIndex = 0
@@ -129,14 +131,11 @@ extension RecipesListViewController: UISearchResultsUpdating {
     if isSearching {
       let delay = DispatchTime.now() + 1
       searchQueue.cancelAllOperations()
-      isSearching = false
-      
+      isSearching = false      
       if let searchText = searchController.searchBar.text {
         DispatchQueue.main.asyncAfter(deadline: delay) { [weak self] in
-          self?.searchQueue.addOperation {
-            self?.viewModel.search(searchText: searchText)
-            self?.recipesListTableView.reloadData()
-          }
+          self?.viewModel.search(searchText: searchText)
+          self?.recipesListTableView.reloadData()
         }
       }
     } else {

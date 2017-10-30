@@ -17,10 +17,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(_ application: UIApplication,
                    didFinishLaunchingWithOptions
     launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-    self.window = UIWindow(frame: UIScreen.main.bounds)
-    self.appCoordinator = AppCoordinator(window: window!)
+    let window = UIWindow(frame: UIScreen.main.bounds)
+    self.appCoordinator = AppCoordinator(window: window)
+    self.window = window
     self.appCoordinator.start()
-    window?.makeKeyAndVisible()
+    window.makeKeyAndVisible()
     
     return true
   }

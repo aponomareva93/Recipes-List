@@ -53,15 +53,5 @@ extension AppCoordinator: RecipesListViewModelDelegate {
     let recipeDetailsViewController = RecipeDetailsViewController(viewModel: recipeDetailsViewModel)
     navigationController.pushViewController(recipeDetailsViewController, animated: true)
     navigationController.navigationItem.leftBarButtonItem = cancelBarButtonItem
-    
-    let titleLabel = UILabel()
-    titleLabel.text = recipeDetailsViewModel.name
-    titleLabel.textAlignment = .center
-    titleLabel.numberOfLines = 0
-    guard let lastViewController = navigationController.viewControllers.last
-      as? RecipeDetailsViewController else {
-      return
-    }
-    lastViewController.navigationItem.titleView = titleLabel
   }
 }

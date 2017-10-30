@@ -29,7 +29,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X2q-OB-re2" userLabel="Content View">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="382"/>
                             <subviews>
                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="3h3-iZ-1cX">
                                     <rect key="frame" x="88" y="28" width="200" height="190"/>
@@ -87,7 +87,7 @@
                                     </constraints>
                                 </stackView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Instructions:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qWB-Mi-KaE">
-                                    <rect key="frame" x="136" y="325.5" width="104.5" height="20.5"/>
+                                    <rect key="frame" x="136.5" y="325.5" width="104.5" height="20.5"/>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -96,10 +96,11 @@
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="k5j-Vs-uSb" secondAttribute="trailing" constant="16" id="1Ob-Yv-aFo"/>
+                                <constraint firstAttribute="bottom" secondItem="Les-7L-L7U" secondAttribute="bottom" constant="28" id="6sz-TE-v8j"/>
                                 <constraint firstItem="Yqb-7s-zrb" firstAttribute="top" secondItem="k5j-Vs-uSb" secondAttribute="bottom" constant="8" id="CKi-yW-P6h"/>
                                 <constraint firstItem="qWB-Mi-KaE" firstAttribute="centerX" secondItem="X2q-OB-re2" secondAttribute="centerX" constant="0.75" id="CTE-5a-C72"/>
                                 <constraint firstItem="qWB-Mi-KaE" firstAttribute="top" secondItem="Yqb-7s-zrb" secondAttribute="bottom" constant="8" id="L7z-pC-Fvz"/>
-                                <constraint firstItem="3h3-iZ-1cX" firstAttribute="centerX" secondItem="X2q-OB-re2" secondAttribute="centerX" id="NZd-Cq-uNR"/>
+                                <constraint firstItem="3h3-iZ-1cX" firstAttribute="centerX" secondItem="k5j-Vs-uSb" secondAttribute="centerX" id="LGR-23-EOO"/>
                                 <constraint firstAttribute="trailing" secondItem="Les-7L-L7U" secondAttribute="trailing" constant="16" id="Qgf-0d-Zvx"/>
                                 <constraint firstItem="3h3-iZ-1cX" firstAttribute="top" secondItem="X2q-OB-re2" secondAttribute="top" constant="28" id="k4Z-0V-huY"/>
                                 <constraint firstItem="Les-7L-L7U" firstAttribute="leading" secondItem="X2q-OB-re2" secondAttribute="leading" constant="16" id="lg5-tf-11D"/>
@@ -111,10 +112,8 @@
                         </view>
                     </subviews>
                     <constraints>
-                        <constraint firstItem="X2q-OB-re2" firstAttribute="centerX" secondItem="ypk-JR-PrN" secondAttribute="centerX" id="R1T-6F-VvL"/>
                         <constraint firstAttribute="bottom" secondItem="X2q-OB-re2" secondAttribute="bottom" id="Y9T-Ex-SM4"/>
                         <constraint firstItem="X2q-OB-re2" firstAttribute="top" secondItem="ypk-JR-PrN" secondAttribute="top" id="YDD-5c-RTj"/>
-                        <constraint firstItem="X2q-OB-re2" firstAttribute="centerY" secondItem="ypk-JR-PrN" secondAttribute="centerY" id="hUq-Am-ecs"/>
                         <constraint firstItem="X2q-OB-re2" firstAttribute="leading" secondItem="ypk-JR-PrN" secondAttribute="leading" id="xe6-hv-bTZ"/>
                         <constraint firstAttribute="trailing" secondItem="X2q-OB-re2" secondAttribute="trailing" id="zk5-uD-HHG"/>
                     </constraints>
