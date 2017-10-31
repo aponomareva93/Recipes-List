@@ -22,6 +22,7 @@ class RecipesListViewController: UIViewController {
   
   // MARK: Outlets
   @IBOutlet private weak var recipesListTableView: UITableView!
+  @IBOutlet private weak var searchBarView: UIView!
   private let searchController: UISearchController
   private var sortControl: UISegmentedControl?
   
@@ -42,15 +43,19 @@ class RecipesListViewController: UIViewController {
     super.viewDidLoad()
     title = Constants.viewTitle
     
+    definesPresentationContext = true
     searchController.searchBar.searchBarStyle = .minimal
     searchController.dimsBackgroundDuringPresentation = false
     searchController.searchResultsUpdater = self
-    definesPresentationContext = true
     searchController.searchBar.sizeToFit()
+    searchBarView.addSubview(searchController.searchBar)
     
     sortControl = createSortControl()
+    if let sortControl = sortControl {
+      sortControl.sizeToFit()
+      recipesListTableView?.tableHeaderView = sortControl
+    }
     
-    recipesListTableView?.tableHeaderView = searchController.searchBar
     recipesListTableView?.delegate = self
     recipesListTableView?.dataSource = self
     recipesListTableView?.register(UINib.init(nibName: Constants.recipeCellNibName, bundle: nil),
@@ -83,7 +88,6 @@ class RecipesListViewController: UIViewController {
     let segmentedSortControl = UISegmentedControl(items: items)
     
     segmentedSortControl.selectedSegmentIndex = 0
-    segmentedSortControl.backgroundColor = .white
     segmentedSortControl.addTarget(self, action: #selector(performSort(sender:)), for: .valueChanged)
     return segmentedSortControl
   }
@@ -117,10 +121,6 @@ extension RecipesListViewController: UITableViewDataSource, UITableViewDelegate 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     viewModel.recipesListViewController(didSelectRecipeAt: indexPath.row)
     tableView.deselectRow(at: indexPath, animated: true)
-  }
-  
-  func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    return sortControl
   }
 }
 
