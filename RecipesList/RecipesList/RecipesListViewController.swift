@@ -61,14 +61,6 @@ class RecipesListViewController: UIViewController {
     recipesListTableView?.register(UINib.init(nibName: Constants.recipeCellNibName, bundle: nil),
                                    forCellReuseIdentifier: Constants.recipeCellIdentifier)
     self.viewModel.getRecipes(updateUIHandler: { [weak self] in
-      let isEmpty = self?.viewModel.sortTypesArray.isEmpty ?? true
-      if !isEmpty {
-        guard let currentSortType = self?.viewModel.sortTypesArray[0] else {
-          return
-        }
-        self?.viewModel.sort(sortType: currentSortType)
-      }
-      
       self?.recipesListTableView.reloadData()
       }, errorHandler: { [weak self] error in
         self?.showAlert(withTitle: "Error", message: error.localizedDescription)
@@ -134,7 +126,7 @@ extension RecipesListViewController: UISearchResultsUpdating {
       if let searchText = searchController.searchBar.text {
         DispatchQueue.main.asyncAfter(deadline: delay) { [weak self] in
           self?.viewModel.search(searchText: searchText)
-          self?.recipesListTableView.reloadData()
+          self?.recipesListTableView?.reloadData()
         }
       }
     } else {
@@ -143,7 +135,13 @@ extension RecipesListViewController: UISearchResultsUpdating {
         searchQueue.addOperation { [weak self] in
           self?.viewModel.search(searchText: searchText)
           DispatchQueue.main.async {
-            self?.recipesListTableView.reloadData()
+            self?.recipesListTableView?.reloadData()
+            if let numberOfRows = self?.recipesListTableView?.numberOfRows(inSection: 0),
+              numberOfRows > 0 {
+              self?.recipesListTableView?.scrollToRow(at: IndexPath(row: 0, section: 0),
+                                                      at: .bottom,
+                                                      animated: false)
+            }
           }
           self?.isSearching = false
         }

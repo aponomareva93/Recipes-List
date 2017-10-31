@@ -46,6 +46,13 @@ class RecipesListViewModel {
       case .success(let recipesResponse):
         self?.recipesStorage = recipesResponse.recipes
         self?.recipes = recipesResponse.recipes
+        
+        if let isEmpty = self?.sortTypesArray.isEmpty,
+          !isEmpty,
+          let currentSortType = self?.sortTypesArray[0] {
+          self?.sort(sortType: currentSortType)
+        }
+        
         DispatchQueue.main.async {
           updateUIHandler()
         }
