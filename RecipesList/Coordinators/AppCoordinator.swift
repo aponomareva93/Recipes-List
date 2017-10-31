@@ -8,6 +8,12 @@
 
 import UIKit
 
+extension AppCoordinator: RecipesListViewModelDelegate {
+  func recipesListViewController(didSelectRecipe recipe: Recipe) {
+    showRecipeDetailsViewController(for: recipe)
+  }
+}
+
 class AppCoordinator: Coordinator {
   var rootViewController: UIViewController {
     return navigationController
@@ -49,13 +55,7 @@ class AppCoordinator: Coordinator {
     navigationController.viewControllers = [recipesListViewController]
   }
   
-  @objc private func cancelButtonTapped(sender: UIBarButtonItem) {
-    navigationController.popViewController(animated: true)
-  }
-}
-
-extension AppCoordinator: RecipesListViewModelDelegate {
-  func recipesListViewController(didSelectRecipe recipe: Recipe) {
+  private func showRecipeDetailsViewController(for recipe: Recipe) {
     let recipeDetailsViewModel = RecipeDetailsViewModel(recipe: recipe)
     let recipeDetailsViewController = RecipeDetailsViewController(viewModel: recipeDetailsViewModel)
     navigationController.pushViewController(recipeDetailsViewController, animated: true)
@@ -63,5 +63,9 @@ extension AppCoordinator: RecipesListViewModelDelegate {
     titleLabel.text = recipeDetailsViewModel.name
     recipeDetailsViewController.navigationItem.titleView = titleLabel
     navigationController.navigationItem.leftBarButtonItem = cancelBarButtonItem
+  }
+  
+  @objc private func cancelButtonTapped(sender: UIBarButtonItem) {
+    navigationController.popViewController(animated: true)
   }
 }
