@@ -24,8 +24,8 @@ class RecipesListViewController: UIViewController {
   @IBOutlet private weak var recipesListTableView: UITableView!
   @IBOutlet private weak var searchBarView: UIView!
   @IBOutlet private weak var noResultsLabel: UILabel!
+  @IBOutlet private weak var sortControl: UISegmentedControl!
   private let searchController: UISearchController
-  private var sortControl: UISegmentedControl?
   
   // MARK: Initializers
   init(viewModel: RecipesListViewModel) {
@@ -45,16 +45,23 @@ class RecipesListViewController: UIViewController {
     title = Constants.viewTitle
     
     definesPresentationContext = true
-    //searchController.searchBar.searchBarStyle = .minimal
+    searchController.searchBar.searchBarStyle = .minimal
     searchController.searchResultsUpdater = self
     searchController.obscuresBackgroundDuringPresentation = false
     searchController.searchBar.sizeToFit()
-    searchBarView.addSubview(searchController.searchBar)
+    searchBarView?.addSubview(searchController.searchBar)
     
-    sortControl = createSortControl()
-    if let sortControl = sortControl {
-      sortControl.sizeToFit()
-      recipesListTableView?.tableHeaderView = sortControl
+    if viewModel.sortTypesCount < 2 {
+      sortControl?.isHidden = true
+    } else {
+      sortControl?.removeAllSegments()
+      for sort in viewModel.sortTypesArray {
+        sortControl?.insertSegment(withTitle: sort.rawValue,
+                                  at: sortControl.numberOfSegments,
+                                  animated: false)
+      }
+      sortControl?.selectedSegmentIndex = 0
+      sortControl?.addTarget(self, action: #selector(performSort(sender:)), for: .valueChanged)
     }
     
     recipesListTableView?.delegate = self
@@ -68,39 +75,22 @@ class RecipesListViewController: UIViewController {
     })
   }
   
-  private func createSortControl() -> UISegmentedControl? {
-    if viewModel.sortTypesCount < 2 {
-      return nil
-    }
-    
-    var items = [String]()
-    for sort in viewModel.sortTypesArray {
-      items.append(sort.rawValue)
-    }
-    
-    let segmentedSortControl = UISegmentedControl(items: items)
-    
-    segmentedSortControl.selectedSegmentIndex = 0
-    segmentedSortControl.addTarget(self, action: #selector(performSort(sender:)), for: .valueChanged)
-    return segmentedSortControl
-  }
-  
   @objc private func performSort(sender: UISegmentedControl) {
     viewModel.sort(sortType: viewModel.sortTypesArray[sender.selectedSegmentIndex])
-    recipesListTableView.reloadData()
+    recipesListTableView?.reloadData()
   }
   
   private func showSearchResults() {
     self.recipesListTableView?.reloadData()
     if viewModel.recipesCount > 0 {
-      self.recipesListTableView?.isHidden = false
-      self.noResultsLabel?.isHidden = true
-      /*self.recipesListTableView?.scrollToRow(at: IndexPath(row: 0, section: 0),
-                                             at: .bottom,
-                                             animated: false)*/
+      recipesListTableView?.isHidden = false
+      noResultsLabel?.isHidden = true
+      if viewModel.sortTypesCount > 1 {
+        sortControl?.isHidden = false
+      }
     } else {
-      self.recipesListTableView?.isHidden = true
-      self.noResultsLabel?.isHidden = false
+      recipesListTableView?.isHidden = true
+      noResultsLabel?.isHidden = false
     }
   }
 }
