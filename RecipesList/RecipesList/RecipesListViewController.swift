@@ -45,7 +45,7 @@ class RecipesListViewController: UIViewController {
     title = Constants.viewTitle
     
     definesPresentationContext = true
-    searchController.searchBar.searchBarStyle = .minimal
+    //searchController.searchBar.searchBarStyle = .minimal
     searchController.searchResultsUpdater = self
     searchController.obscuresBackgroundDuringPresentation = false
     searchController.searchBar.sizeToFit()
@@ -95,9 +95,9 @@ class RecipesListViewController: UIViewController {
     if viewModel.recipesCount > 0 {
       self.recipesListTableView?.isHidden = false
       self.noResultsLabel?.isHidden = true
-      self.recipesListTableView?.scrollToRow(at: IndexPath(row: 0, section: 0),
+      /*self.recipesListTableView?.scrollToRow(at: IndexPath(row: 0, section: 0),
                                              at: .bottom,
-                                             animated: false)
+                                             animated: false)*/
     } else {
       self.recipesListTableView?.isHidden = true
       self.noResultsLabel?.isHidden = false
