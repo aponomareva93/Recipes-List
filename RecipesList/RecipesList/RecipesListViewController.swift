@@ -68,7 +68,7 @@ class RecipesListViewController: UIViewController {
   }
   
   func createSortControl() -> UISegmentedControl? {
-    if viewModel.sortTypesArray.isEmpty {
+    if viewModel.sortTypesCount < 2 {
       return nil
     }
     
