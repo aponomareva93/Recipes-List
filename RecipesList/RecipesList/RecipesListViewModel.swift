@@ -45,13 +45,8 @@ class RecipesListViewModel {
       switch responseObject {
       case .success(let recipesResponse):
         self?.recipesStorage = recipesResponse.recipes
-        self?.recipes = recipesResponse.recipes
-        
-        if let isEmpty = self?.sortTypesArray.isEmpty,
-          !isEmpty,
-          let currentSortType = self?.sortTypesArray[0] {
-          self?.sort(sortType: currentSortType)
-        }
+        self?.recipes = recipesResponse.recipes        
+        self?.sort(sortType: self?.sortTypesArray.first)
         
         DispatchQueue.main.async {
           updateUIHandler()
@@ -85,7 +80,10 @@ class RecipesListViewModel {
     }
   }
   
-  func sort(sortType: Constants.SortTypes) {
+  func sort(sortType: Constants.SortTypes?) {
+    guard let sortType = sortType else {
+      return
+    }
     switch sortType {
     case .alphabeticallySort:
       recipesStorage = recipesStorage.sorted {

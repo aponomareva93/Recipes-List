@@ -9,25 +9,21 @@
 import UIKit
 
 class RecipesListCellViewModel {
-  private var recipe: Recipe?
+  private var recipe: Recipe
   
   var name: String? {
-    return recipe?.name
+    return recipe.name
   }
   
   var description: String? {
-    return recipe?.description
+    return recipe.description
   }
   
   var imageURL: URL? {
-    guard let imagesURLs = recipe?.imagesURLs,
-      !imagesURLs.isEmpty else {
-        return nil
-    }
-    return imagesURLs[0]
+    return recipe.imagesURLs.first as? URL
   }
   
-  init(with recipe: Recipe?) {
+  init(with recipe: Recipe) {
     self.recipe = recipe
   }
 }

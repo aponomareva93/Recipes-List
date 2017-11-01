@@ -90,13 +90,6 @@ class NetworkManager {
   
   class func fetchRecipes(completionHandler: @escaping (Response<RecipesResponse>) -> Void) {
     let url = URL(string: Constants.recipesAPIUrl)
-    if let url = url {
-      baseRequest(url: url, method: .get, completion: completionHandler)
-    } else {
-      let error = NSError(domain: Constants.invalidURLError.domain,
-                          code: Constants.invalidURLError.code,
-                          userInfo: Constants.invalidURLError.userInfo)
-      completionHandler(.failure(error))
-    }
+    baseRequest(url: url, method: .get, completion: completionHandler)
   }
 }

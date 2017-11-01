@@ -145,11 +145,13 @@ extension RecipesListViewController: UISearchResultsUpdating {
       searchQueue.cancelAllOperations()
       isSearching = false      
       if let searchText = searchController.searchBar.text {
-        DispatchQueue.global().asyncAfter(deadline: delay) { [weak self] in
-          self?.viewModel.search(searchText: searchText)
-          DispatchQueue.main.async {
-            self?.showSearchResults()
-          }
+        searchQueue.addOperation {
+          DispatchQueue.global().asyncAfter(deadline: delay) { [weak self] in
+            self?.viewModel.search(searchText: searchText)
+            DispatchQueue.main.async {
+              self?.showSearchResults()
+            }
+          }          
         }
       }
     } else {
