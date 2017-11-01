@@ -45,8 +45,8 @@ class RecipesListViewController: UIViewController {
     
     definesPresentationContext = true
     searchController.searchBar.searchBarStyle = .minimal
-    searchController.dimsBackgroundDuringPresentation = false
     searchController.searchResultsUpdater = self
+    searchController.dimsBackgroundDuringPresentation = false
     searchController.searchBar.sizeToFit()
     searchBarView.addSubview(searchController.searchBar)
     
@@ -113,6 +113,12 @@ extension RecipesListViewController: UITableViewDataSource, UITableViewDelegate 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     viewModel.recipesListViewController(didSelectRecipeAt: indexPath.row)
     tableView.deselectRow(at: indexPath, animated: true)
+  }
+  
+  func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+    if searchController.searchBar.isFirstResponder {
+      searchController.searchBar.resignFirstResponder()
+    }
   }
 }
 
