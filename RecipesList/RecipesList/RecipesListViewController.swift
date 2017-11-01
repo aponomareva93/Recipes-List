@@ -23,6 +23,7 @@ class RecipesListViewController: UIViewController {
   // MARK: Outlets
   @IBOutlet private weak var recipesListTableView: UITableView!
   @IBOutlet private weak var searchBarView: UIView!
+  @IBOutlet private weak var noResultsLabel: UILabel!
   private let searchController: UISearchController
   private var sortControl: UISegmentedControl?
   
@@ -46,7 +47,7 @@ class RecipesListViewController: UIViewController {
     definesPresentationContext = true
     searchController.searchBar.searchBarStyle = .minimal
     searchController.searchResultsUpdater = self
-    searchController.dimsBackgroundDuringPresentation = false
+    searchController.obscuresBackgroundDuringPresentation = false
     searchController.searchBar.sizeToFit()
     searchBarView.addSubview(searchController.searchBar)
     
@@ -67,7 +68,7 @@ class RecipesListViewController: UIViewController {
     })
   }
   
-  func createSortControl() -> UISegmentedControl? {
+  private func createSortControl() -> UISegmentedControl? {
     if viewModel.sortTypesCount < 2 {
       return nil
     }
@@ -84,9 +85,23 @@ class RecipesListViewController: UIViewController {
     return segmentedSortControl
   }
   
-  @objc func performSort(sender: UISegmentedControl) {
+  @objc private func performSort(sender: UISegmentedControl) {
     viewModel.sort(sortType: viewModel.sortTypesArray[sender.selectedSegmentIndex])
     recipesListTableView.reloadData()
+  }
+  
+  private func showSearchResults() {
+    self.recipesListTableView?.reloadData()
+    if viewModel.recipesCount > 0 {
+      self.recipesListTableView?.isHidden = false
+      self.noResultsLabel?.isHidden = true
+      self.recipesListTableView?.scrollToRow(at: IndexPath(row: 0, section: 0),
+                                             at: .bottom,
+                                             animated: false)
+    } else {
+      self.recipesListTableView?.isHidden = true
+      self.noResultsLabel?.isHidden = false
+    }
   }
 }
 
@@ -130,9 +145,11 @@ extension RecipesListViewController: UISearchResultsUpdating {
       searchQueue.cancelAllOperations()
       isSearching = false      
       if let searchText = searchController.searchBar.text {
-        DispatchQueue.main.asyncAfter(deadline: delay) { [weak self] in
+        DispatchQueue.global().asyncAfter(deadline: delay) { [weak self] in
           self?.viewModel.search(searchText: searchText)
-          self?.recipesListTableView?.reloadData()
+          DispatchQueue.main.async {
+            self?.showSearchResults()
+          }
         }
       }
     } else {
@@ -141,13 +158,7 @@ extension RecipesListViewController: UISearchResultsUpdating {
         searchQueue.addOperation { [weak self] in
           self?.viewModel.search(searchText: searchText)
           DispatchQueue.main.async {
-            self?.recipesListTableView?.reloadData()
-            if let numberOfRows = self?.recipesListTableView?.numberOfRows(inSection: 0),
-              numberOfRows > 0 {
-              self?.recipesListTableView?.scrollToRow(at: IndexPath(row: 0, section: 0),
-                                                      at: .bottom,
-                                                      animated: false)
-            }
+            self?.showSearchResults()
           }
           self?.isSearching = false
         }
