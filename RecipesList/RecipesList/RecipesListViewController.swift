@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 fileprivate extension Constants {
   static let recipeCellIdentifier = "Recipe Cell"
@@ -68,9 +69,13 @@ class RecipesListViewController: UIViewController {
     recipesListTableView?.dataSource = self
     recipesListTableView?.register(UINib.init(nibName: Constants.recipeCellNibName, bundle: nil),
                                    forCellReuseIdentifier: Constants.recipeCellIdentifier)
+    
+    SVProgressHUD.show(withStatus: "Loading")
     self.viewModel.getRecipes(updateUIHandler: { [weak self] in
       self?.recipesListTableView.reloadData()
+      SVProgressHUD.dismiss()
       }, errorHandler: { [weak self] error in
+        SVProgressHUD.dismiss()
         self?.showAlert(withTitle: "Error", message: error.localizedDescription)
     })
   }

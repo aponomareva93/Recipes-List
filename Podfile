@@ -6,6 +6,7 @@ target 'RecipesList' do
   pod 'SwiftLint'
   pod 'Alamofire'
   pod 'Kingfisher'
+  pod 'SVProgressHUD'
 end
 
 post_install do |installer|
