@@ -167,8 +167,8 @@
 				9547A1471F84D35A00E707C8 /* NetworkManager.swift */,
 				9547A1491F84D6F400E707C8 /* Constants.swift */,
 				958CAEEA1FA05C080002A5EB /* Extensions.swift */,
-				955F57481F84B38C00ABE75F /* AppDelegate.swift */,
 				95F9F6151F9F2B95000BCF89 /* LaunchScreen.xib */,
+				955F57481F84B38C00ABE75F /* AppDelegate.swift */,
 				955F574F1F84B38C00ABE75F /* Assets.xcassets */,
 				955F57541F84B38C00ABE75F /* Info.plist */,
 			);

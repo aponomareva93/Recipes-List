@@ -16,7 +16,7 @@ function_parameter_count:
   warning: 10
   error: 10
 
-variable_name:  
+identifier_name:  
   excluded:
     - row
     - key

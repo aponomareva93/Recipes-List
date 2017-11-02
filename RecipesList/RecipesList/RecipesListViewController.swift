@@ -23,9 +23,9 @@ class RecipesListViewController: UIViewController {
   
   // MARK: Outlets
   @IBOutlet private weak var recipesListTableView: UITableView!
-  @IBOutlet private weak var searchBarView: UIView!
   @IBOutlet private weak var noResultsLabel: UILabel!
   @IBOutlet private weak var sortControl: UISegmentedControl!
+  @IBOutlet private weak var searchBarContainerView: UIView!
   private let searchController: UISearchController
   private let refreshControl: UIRefreshControl
   
@@ -51,9 +51,8 @@ class RecipesListViewController: UIViewController {
     searchController.searchBar.searchBarStyle = .minimal
     searchController.searchResultsUpdater = self
     searchController.obscuresBackgroundDuringPresentation = false
-    searchController.searchBar.sizeToFit()
     searchController.searchBar.delegate = self
-    searchBarView?.addSubview(searchController.searchBar)
+    searchBarContainerView.addSubview(searchController.searchBar)
     
     if viewModel.sortTypesCount < 2 {
       sortControl?.isHidden = true
