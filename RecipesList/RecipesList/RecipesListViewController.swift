@@ -110,11 +110,24 @@ class RecipesListViewController: UIViewController {
       sortControl?.alpha = 0.5
       searchController.searchBar.isUserInteractionEnabled = false
       searchController.searchBar.alpha = 0.5
+      
+      let label = UILabel(frame: CGRect(x: 0,
+                                        y: 0,
+                                        width: recipesListTableView.frame.width,
+                                        height: recipesListTableView.frame.height))
+      label.text = "Nothing to display. List is empty :(\nPull to refresh\n↓"
+      label.textColor = .lightGray
+      label.textAlignment = .center
+      label.lineBreakMode = .byWordWrapping
+      label.font = UIFont.systemFont(ofSize: 20)
+      label.numberOfLines = 0
+      recipesListTableView?.tableHeaderView = label
     } else {
       sortControl?.isUserInteractionEnabled = true
       sortControl?.alpha = 1
       searchController.searchBar.isUserInteractionEnabled = true
       searchController.searchBar.alpha = 1
+      recipesListTableView?.tableHeaderView = nil
     }
   }
   
