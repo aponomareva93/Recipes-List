@@ -27,12 +27,14 @@ class RecipesListViewController: UIViewController {
   @IBOutlet private weak var noResultsLabel: UILabel!
   @IBOutlet private weak var sortControl: UISegmentedControl!
   private let searchController: UISearchController
+  private let refreshControl: UIRefreshControl
   
   // MARK: Initializers
   init(viewModel: RecipesListViewModel) {
     self.viewModel = viewModel
     isSearching = false
     searchController = UISearchController(searchResultsController: nil)
+    refreshControl = UIRefreshControl()
     super.init(nibName: nil, bundle: nil)
   }
   
@@ -50,6 +52,7 @@ class RecipesListViewController: UIViewController {
     searchController.searchResultsUpdater = self
     searchController.obscuresBackgroundDuringPresentation = false
     searchController.searchBar.sizeToFit()
+    searchController.searchBar.delegate = self
     searchBarView?.addSubview(searchController.searchBar)
     
     if viewModel.sortTypesCount < 2 {
@@ -70,19 +73,50 @@ class RecipesListViewController: UIViewController {
     recipesListTableView?.register(UINib.init(nibName: Constants.recipeCellNibName, bundle: nil),
                                    forCellReuseIdentifier: Constants.recipeCellIdentifier)
     
-    SVProgressHUD.show(withStatus: "Loading")
-    self.viewModel.getRecipes(updateUIHandler: { [weak self] in
-      self?.recipesListTableView.reloadData()
-      SVProgressHUD.dismiss()
-      }, errorHandler: { [weak self] error in
-        SVProgressHUD.dismiss()
-        self?.showAlert(withTitle: "Error", message: error.localizedDescription)
-    })
+    refreshControl.addTarget(self, action: #selector(refreshRecipesList(sender:)), for: .valueChanged)
+    recipesListTableView?.refreshControl = refreshControl
+    
+    loadRecipes()
   }
   
   @objc private func performSort(sender: UISegmentedControl) {
     viewModel.sort(sortType: viewModel.sortTypesArray[sender.selectedSegmentIndex])
     recipesListTableView?.reloadData()
+  }
+  
+  @objc private func refreshRecipesList(sender: UIRefreshControl) {
+    loadRecipes()
+    sender.endRefreshing()
+  }
+  
+  private func loadRecipes() {
+    SVProgressHUD.show(withStatus: "Loading")
+    self.viewModel.getRecipes(updateUIHandler: { [weak self] in
+      self?.recipesListTableView.reloadData()
+      self?.configureUIElementsAccessability()
+      SVProgressHUD.dismiss()
+      }, errorHandler: { [weak self] error in
+        SVProgressHUD.dismiss()
+        self?.configureUIElementsAccessability()
+        let delay = DispatchTime.now() + 0.5
+        DispatchQueue.main.asyncAfter(deadline: delay) {
+          self?.showAlert(withTitle: "Error", message: error.localizedDescription)
+        }
+    })
+  }
+  
+  private func configureUIElementsAccessability() {
+    if viewModel.recipesCount == 0 {
+      sortControl?.isUserInteractionEnabled = false
+      sortControl?.alpha = 0.5
+      searchController.searchBar.isUserInteractionEnabled = false
+      searchController.searchBar.alpha = 0.5
+    } else {
+      sortControl?.isUserInteractionEnabled = true
+      sortControl?.alpha = 1
+      searchController.searchBar.isUserInteractionEnabled = true
+      searchController.searchBar.alpha = 1
+    }
   }
   
   private func showSearchResults() {
@@ -95,6 +129,7 @@ class RecipesListViewController: UIViewController {
       }
     } else {
       recipesListTableView?.isHidden = true
+      sortControl?.isHidden = true
       noResultsLabel?.isHidden = false
     }
   }
@@ -161,5 +196,17 @@ extension RecipesListViewController: UISearchResultsUpdating {
         }
       }
     }
+  }
+  
+  func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+    recipesListTableView?.refreshControl = refreshControl
+  }
+}
+
+// MARK: UISearchBarDelegate
+extension RecipesListViewController: UISearchBarDelegate {
+  func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+    recipesListTableView?.refreshControl = nil
+    return true
   }
 }
