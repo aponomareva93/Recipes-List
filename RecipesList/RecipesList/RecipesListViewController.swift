@@ -13,6 +13,9 @@ fileprivate extension Constants {
   static let recipeCellIdentifier = "Recipe Cell"
   static let recipeCellNibName = "RecipesListCell"
   static let viewTitle = "Recipes"
+  
+  static let defaultTopOffset: CGFloat = 0
+  static let topOffsetWhenBarIsHidden: CGFloat = 20
 }
 
 class RecipesListViewController: UIViewController {
@@ -26,6 +29,7 @@ class RecipesListViewController: UIViewController {
   @IBOutlet private weak var noResultsLabel: UILabel!
   @IBOutlet private weak var sortControl: UISegmentedControl!
   @IBOutlet private weak var searchBarContainerView: UIView!
+  @IBOutlet weak var viewTopConstraint: NSLayoutConstraint!
   private let searchController: UISearchController
   private let refreshControl: UIRefreshControl
   
@@ -47,7 +51,9 @@ class RecipesListViewController: UIViewController {
     super.viewDidLoad()
     title = Constants.viewTitle
     
+    automaticallyAdjustsScrollViewInsets = false
     definesPresentationContext = true
+    
     searchController.searchBar.searchBarStyle = .minimal
     searchController.searchResultsUpdater = self
     searchController.obscuresBackgroundDuringPresentation = false
@@ -111,17 +117,17 @@ class RecipesListViewController: UIViewController {
       searchController.searchBar.isUserInteractionEnabled = false
       searchController.searchBar.alpha = 0.5
       
-      let label = UILabel(frame: CGRect(x: 0,
+      let emptyListLabel = UILabel(frame: CGRect(x: 0,
                                         y: 0,
                                         width: recipesListTableView.frame.width,
                                         height: recipesListTableView.frame.height))
-      label.text = "Nothing to display. List is empty :(\nPull to refresh\n↓"
-      label.textColor = .lightGray
-      label.textAlignment = .center
-      label.lineBreakMode = .byWordWrapping
-      label.font = UIFont.systemFont(ofSize: 20)
-      label.numberOfLines = 0
-      recipesListTableView?.tableHeaderView = label
+      emptyListLabel.text = "Nothing to display. List is empty :(\nPull to refresh\n↓"
+      emptyListLabel.textColor = .lightGray
+      emptyListLabel.textAlignment = .center
+      emptyListLabel.lineBreakMode = .byWordWrapping
+      emptyListLabel.font = UIFont.systemFont(ofSize: 20)
+      emptyListLabel.numberOfLines = 0
+      recipesListTableView?.tableHeaderView = emptyListLabel
     } else {
       sortControl?.isUserInteractionEnabled = true
       sortControl?.alpha = 1
@@ -143,6 +149,15 @@ class RecipesListViewController: UIViewController {
       recipesListTableView?.isHidden = true
       sortControl?.isHidden = true
       noResultsLabel?.isHidden = false
+    }
+  }
+  
+  override func viewWillLayoutSubviews() {
+    super.viewWillLayoutSubviews()
+    if searchController.isActive {
+      viewTopConstraint.constant = Constants.topOffsetWhenBarIsHidden
+    } else {
+      viewTopConstraint.constant = Constants.defaultTopOffset
     }
   }
 }

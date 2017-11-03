@@ -28,13 +28,6 @@ class AppCoordinator: Coordinator {
     return cancelBarButtonItem
   }()
   
-  private lazy var titleLabel: UILabel = {
-    let titleLabel = UILabel()
-    titleLabel.textAlignment = .center
-    titleLabel.numberOfLines = 0
-    return titleLabel
-  }()
-  
   private let window: UIWindow
   
   init(window: UIWindow) {
@@ -52,7 +45,9 @@ class AppCoordinator: Coordinator {
     let recipesListViewModel = RecipesListViewModel()
     recipesListViewModel.coordinatorDelegate = self
     let recipesListViewController = RecipesListViewController(viewModel: recipesListViewModel)
-    navigationController.viewControllers = [recipesListViewController]
+    navigationController.pushViewController(recipesListViewController, animated: true)
+    
+    navigationController.navigationBar.isTranslucent = false
   }
   
   private func showRecipeDetailsViewController(for recipe: Recipe) {
@@ -60,8 +55,6 @@ class AppCoordinator: Coordinator {
     let recipeDetailsViewController = RecipeDetailsViewController(viewModel: recipeDetailsViewModel)
     navigationController.pushViewController(recipeDetailsViewController, animated: true)
     
-    titleLabel.text = recipeDetailsViewModel.name
-    recipeDetailsViewController.navigationItem.titleView = titleLabel
     navigationController.navigationItem.leftBarButtonItem = cancelBarButtonItem
   }
   
