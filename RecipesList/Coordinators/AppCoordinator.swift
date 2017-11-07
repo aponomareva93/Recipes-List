@@ -28,6 +28,14 @@ class AppCoordinator: Coordinator {
     return cancelBarButtonItem
   }()
   
+  private lazy var titleLabel: UILabel = {
+    let label = UILabel(frame: CGRect(origin: .zero, size: navigationController.navigationBar.frame.size))
+    label.textAlignment = .center
+    label.numberOfLines = 0
+    label.adjustsFontSizeToFitWidth = true
+    return label
+  }()
+  
   private let window: UIWindow
   
   init(window: UIWindow) {
@@ -56,6 +64,8 @@ class AppCoordinator: Coordinator {
     navigationController.pushViewController(recipeDetailsViewController, animated: true)
     
     navigationController.navigationItem.leftBarButtonItem = cancelBarButtonItem
+    titleLabel.text = recipeDetailsViewModel.name
+    recipeDetailsViewController.navigationItem.titleView = titleLabel
   }
   
   @objc private func cancelButtonTapped(sender: UIBarButtonItem) {
