@@ -12,7 +12,6 @@ import SVProgressHUD
 fileprivate extension Constants {
   static let recipeCellIdentifier = "Recipe Cell"
   static let recipeCellNibName = "RecipesListCell"
-  static let viewTitle = "Recipes"
   
   static let defaultTopOffset: CGFloat = 0
   static let topOffsetWhenBarIsHidden: CGFloat = 20
@@ -49,7 +48,7 @@ class RecipesListViewController: UIViewController {
   // MARK: UI setup
   override func viewDidLoad() {
     super.viewDidLoad()
-    title = Constants.viewTitle
+    //title = Constants.viewTitle
     
     automaticallyAdjustsScrollViewInsets = false
     definesPresentationContext = true

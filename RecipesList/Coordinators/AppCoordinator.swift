@@ -8,6 +8,10 @@
 
 import UIKit
 
+fileprivate extension Constants {
+  static let recipesListViewTitle = "Recipes"
+}
+
 extension AppCoordinator: RecipesListViewModelDelegate {
   func recipesListViewController(didSelectRecipe recipe: Recipe) {
     showRecipeDetailsViewController(for: recipe)
@@ -53,6 +57,7 @@ class AppCoordinator: Coordinator {
     let recipesListViewModel = RecipesListViewModel()
     recipesListViewModel.coordinatorDelegate = self
     let recipesListViewController = RecipesListViewController(viewModel: recipesListViewModel)
+    recipesListViewController.title = Constants.recipesListViewTitle
     navigationController.pushViewController(recipesListViewController, animated: true)
     
     navigationController.navigationBar.isTranslucent = false
