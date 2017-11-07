@@ -192,6 +192,14 @@ extension RecipesListViewController: UITableViewDataSource, UITableViewDelegate 
       searchController.searchBar.resignFirstResponder()
     }
   }
+  
+  func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    if scrollView.contentOffset.y >= scrollView.contentSize.height - scrollView.frame.size.height {
+      scrollView.setContentOffset(CGPoint(x: scrollView.contentOffset.x,
+                                          y: scrollView.contentSize.height - scrollView.frame.size.height),
+                                  animated: false)
+    }
+  }
 }
 
 // MARK: UISearchResultsUpdating
