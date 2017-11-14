@@ -25,13 +25,6 @@ class AppCoordinator: Coordinator {
   
   private let navigationController: UINavigationController = UINavigationController()
   
-  private lazy var cancelBarButtonItem: UIBarButtonItem = {
-    let cancelBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel,
-                                              target: self,
-                                              action: #selector(cancelButtonTapped))
-    return cancelBarButtonItem
-  }()
-  
   private lazy var titleLabel: UILabel = {
     let label = UILabel(frame: CGRect(origin: .zero, size: navigationController.navigationBar.frame.size))
     label.textAlignment = .center
@@ -58,8 +51,19 @@ class AppCoordinator: Coordinator {
     recipesListViewModel.coordinatorDelegate = self
     let recipesListViewController = RecipesListViewController(viewModel: recipesListViewModel)
     recipesListViewController.title = Constants.recipesListViewTitle
-    navigationController.pushViewController(recipesListViewController, animated: true)
     
+    if #available(iOS 11.0, *) {
+      recipesListViewController.navigationItem.searchController =
+        recipesListViewController.searchController
+      recipesListViewController.navigationItem.hidesSearchBarWhenScrolling = false
+      recipesListViewController.definesPresentationContext = true
+    } else {
+      recipesListViewController.navigationItem.titleView =
+        recipesListViewController.searchController.searchBar
+      recipesListViewController.searchController.hidesNavigationBarDuringPresentation = false
+    }
+    
+    navigationController.pushViewController(recipesListViewController, animated: true)
     navigationController.navigationBar.isTranslucent = false
   }
   
@@ -68,12 +72,7 @@ class AppCoordinator: Coordinator {
     let recipeDetailsViewController = RecipeDetailsViewController(viewModel: recipeDetailsViewModel)
     navigationController.pushViewController(recipeDetailsViewController, animated: true)
     
-    navigationController.navigationItem.leftBarButtonItem = cancelBarButtonItem
     titleLabel.text = recipeDetailsViewModel.name
     recipeDetailsViewController.navigationItem.titleView = titleLabel
-  }
-  
-  @objc private func cancelButtonTapped(sender: UIBarButtonItem) {
-    navigationController.popViewController(animated: true)
   }
 }

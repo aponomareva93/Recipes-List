@@ -14,7 +14,6 @@ fileprivate extension Constants {
   static let recipeCellNibName = "RecipesListCell"
   
   static let defaultTopOffset: CGFloat = 0
-  static let topOffsetWhenBarIsHidden: CGFloat = 20
 }
 
 class RecipesListViewController: UIViewController {
@@ -27,9 +26,7 @@ class RecipesListViewController: UIViewController {
   @IBOutlet private weak var recipesListTableView: UITableView!
   @IBOutlet private weak var noResultsLabel: UILabel!
   @IBOutlet private weak var sortControl: UISegmentedControl!
-  @IBOutlet private weak var searchBarContainerView: UIView!
-  @IBOutlet weak var viewTopConstraint: NSLayoutConstraint!
-  private let searchController: UISearchController
+  let searchController: UISearchController
   private let refreshControl: UIRefreshControl
   
   // MARK: Initializers
@@ -48,16 +45,11 @@ class RecipesListViewController: UIViewController {
   // MARK: UI setup
   override func viewDidLoad() {
     super.viewDidLoad()
-    //title = Constants.viewTitle
-    
-    automaticallyAdjustsScrollViewInsets = false
-    definesPresentationContext = true
     
     searchController.searchBar.searchBarStyle = .minimal
     searchController.searchResultsUpdater = self
     searchController.obscuresBackgroundDuringPresentation = false
     searchController.searchBar.delegate = self
-    searchBarContainerView.addSubview(searchController.searchBar)
     
     if viewModel.sortTypesCount < 2 {
       sortControl?.isHidden = true
@@ -137,7 +129,7 @@ class RecipesListViewController: UIViewController {
   }
   
   private func showSearchResults() {
-    self.recipesListTableView?.reloadData()
+    recipesListTableView?.reloadData()
     if viewModel.recipesCount > 0 {
       recipesListTableView?.isHidden = false
       noResultsLabel?.isHidden = true
@@ -148,15 +140,6 @@ class RecipesListViewController: UIViewController {
       recipesListTableView?.isHidden = true
       sortControl?.isHidden = true
       noResultsLabel?.isHidden = false
-    }
-  }
-  
-  override func viewWillLayoutSubviews() {
-    super.viewWillLayoutSubviews()
-    if searchController.isActive {
-      viewTopConstraint.constant = Constants.topOffsetWhenBarIsHidden
-    } else {
-      viewTopConstraint.constant = Constants.defaultTopOffset
     }
   }
 }
@@ -189,14 +172,6 @@ extension RecipesListViewController: UITableViewDataSource, UITableViewDelegate 
   func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
     if searchController.searchBar.isFirstResponder {
       searchController.searchBar.resignFirstResponder()
-    }
-  }
-  
-  func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    if scrollView.contentOffset.y >= scrollView.contentSize.height - scrollView.frame.size.height {
-      scrollView.setContentOffset(CGPoint(x: scrollView.contentOffset.x,
-                                          y: scrollView.contentSize.height - scrollView.frame.size.height),
-                                  animated: false)
     }
   }
 }
