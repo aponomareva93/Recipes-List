@@ -15,6 +15,14 @@ fileprivate extension Constants {
                                       "Impossible to fetch recipe parameters from JSON data"])
 }
 
+private struct Keys {
+  static let name = "name"
+  static let images = "images"
+  static let lastUpdated = "lastUpdated"
+  static let instructions = "instructions"
+  static let difficulty = "difficulty"
+}
+
 struct Recipe: JSONMappable {
   let name: String
   let imagesURLs: [URL?]
@@ -24,11 +32,11 @@ struct Recipe: JSONMappable {
   let difficulty: Int
   
   init(fromJSON json: JSON?) throws {
-    guard let name = json?["name"] as? String,
-    let imagesURLsNames = json?["images"] as? [String],
-    let lastUpdated = json?["lastUpdated"] as? Int,
-    let instructions = json?["instructions"] as? String,
-    let difficulty = json?["difficulty"] as? Int else {
+    guard let name = json?[Keys.name] as? String,
+    let imagesURLsNames = json?[Keys.images] as? [String],
+    let lastUpdated = json?[Keys.lastUpdated] as? Int,
+    let instructions = json?[Keys.instructions] as? String,
+    let difficulty = json?[Keys.difficulty] as? Int else {
       let error = NSError(domain: Constants.invalidJSONDataError.domain,
                           code: Constants.invalidJSONDataError.code,
                           userInfo: Constants.invalidJSONDataError.userInfo)

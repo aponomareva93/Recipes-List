@@ -21,3 +21,6 @@ xcuserdata/
 ## Playgrounds
 timeline.xctimeline
 playground.xcworkspace
+
+#Pods
+Pods/
