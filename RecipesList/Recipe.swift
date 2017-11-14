@@ -21,6 +21,7 @@ private struct Keys {
   static let lastUpdated = "lastUpdated"
   static let instructions = "instructions"
   static let difficulty = "difficulty"
+  static let description = "description"
 }
 
 struct Recipe: JSONMappable {
@@ -55,6 +56,6 @@ struct Recipe: JSONMappable {
     }
     imagesURLs = urls
     
-    self.description = json?["description"] as? String
+    self.description = json?[Keys.description] as? String
   }
 }
